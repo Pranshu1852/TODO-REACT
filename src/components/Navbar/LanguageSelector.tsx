@@ -1,6 +1,21 @@
 import { MenuItem, TextField } from "@mui/material";
+import { useContext } from "react";
+import { GeneralContext, GeneralContextAction } from "../context/GeneralContext";
+import { useTranslation } from "react-i18next";
 
 function LanguageSelector() {
+  const { i18n } = useTranslation();
+  const generalContext = useContext(GeneralContext);
+
+  if (!generalContext) {
+    return;
+  }
+
+  function handleLanguageChange(lang: string) {
+    generalContext!.dispatch({type: GeneralContextAction.CHANGELANGUAGE,payload: lang});
+    i18n.changeLanguage(lang);
+  }
+
   return (
     <TextField
       id="outlined-select-currency "
@@ -9,7 +24,11 @@ function LanguageSelector() {
       size="small"
       sx={{
         color: "black",
-        border: "none"
+        border: "none",
+      }}
+      value={generalContext.state.language}
+      onChange={(event) => {
+        handleLanguageChange(event.target.value);
       }}
     >
       <MenuItem value="en">English</MenuItem>
