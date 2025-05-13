@@ -5,7 +5,8 @@ import { useContext, useEffect } from "react";
 import { GeneralContext } from "./components/context/GeneralContext";
 import TodoLayout from "./components/Todos/TodoLayout";
 import TodosPage from "./components/Todos/TodosPage";
-import TodoDetailPage from "./components/Todos/TodoDetailPage";
+import TodoDetailPage from "./components/Todos/Viewtodo/TodoDetailPage";
+import AddTodoPage from "./components/Todos/Addtodo/AddTodoPage";
 
 function App() {
   const { i18n } = useTranslation();
@@ -22,12 +23,21 @@ function App() {
     document.body.dir = i18n.dir();
   }, [i18n, i18n.language]);
 
+  if (!generalContext) {
+    return;
+  }
+
+  const { state } = generalContext;
+
   return (
-    <div className="flex flex-col min-h-[100vh] bg-[#faebd7]">
+    <div
+      className={`flex flex-col min-h-[100vh] font-[Montserrat] ${state.themeMode === "light" ? "bg-white text-black" : "bg-[#333] text-white"}`}
+    >
       <Navbar />
       <Routes>
         <Route path="/" element={<h2>Home</h2>} />
         <Route path="/about" element={<h2>About</h2>} />
+        <Route path="/addtodo" element={<AddTodoPage />} />
         <Route path="/todos" element={<TodoLayout />}>
           <Route index element={<TodosPage />} />
           <Route path="/todos/:id" element={<TodoDetailPage />} />

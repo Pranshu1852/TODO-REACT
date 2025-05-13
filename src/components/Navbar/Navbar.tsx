@@ -10,6 +10,7 @@ import {
 import { Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavLinks from "./NavLinks";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const { t } = useTranslation();
@@ -37,18 +38,18 @@ function Navbar() {
           </button>
           <Drawer open={open} onClose={toggleDrawer(false)}>
             <nav>
-              <ul className="flex flex-col items-center p-5 mt-10 gap-5 text-xl w-[50vw]">
+              <ul className="flex flex-col items-center p-5 mt-10 gap-5 text-xl font-medium w-[50vw]">
                 <NavLinks />
               </ul>
             </nav>
           </Drawer>
         </div>
-        <h1 className="text-3xl font-extrabold font-[Tagesschrift]">
+        <Link to="/" className="text-3xl font-extrabold font-[Tagesschrift]">
           {t("logo")}
-        </h1>
+        </Link>
       </div>
       <nav className="hidden sm:block">
-        <ul className="flex flex-row gap-5 text-lg">
+        <ul className="flex flex-row gap-5 text-lg font-medium">
           <NavLinks />
         </ul>
       </nav>
