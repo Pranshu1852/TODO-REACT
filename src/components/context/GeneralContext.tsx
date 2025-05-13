@@ -36,16 +36,16 @@ function reducer(
         themeMode: newTheme,
       };
     }
-    case GeneralContextAction.CHANGELANGUAGE:{
-        if(!action.payload){
-            return state;
-        }
-        const newLanguage = action.payload;
-        localStorage.setItem('lang', newLanguage);
-        return {
-            ...state,
-            language: newLanguage
-        }
+    case GeneralContextAction.CHANGELANGUAGE: {
+      if (!action.payload) {
+        return state;
+      }
+      const newLanguage = action.payload;
+      localStorage.setItem("lang", newLanguage);
+      return {
+        ...state,
+        language: newLanguage,
+      };
     }
   }
 

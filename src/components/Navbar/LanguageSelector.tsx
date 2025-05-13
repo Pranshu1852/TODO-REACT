@@ -1,6 +1,9 @@
 import { MenuItem, TextField } from "@mui/material";
 import { useContext } from "react";
-import { GeneralContext, GeneralContextAction } from "../context/GeneralContext";
+import {
+  GeneralContext,
+  GeneralContextAction,
+} from "../context/GeneralContext";
 import { useTranslation } from "react-i18next";
 
 function LanguageSelector() {
@@ -12,7 +15,10 @@ function LanguageSelector() {
   }
 
   function handleLanguageChange(lang: string) {
-    generalContext!.dispatch({type: GeneralContextAction.CHANGELANGUAGE,payload: lang});
+    generalContext!.dispatch({
+      type: GeneralContextAction.CHANGELANGUAGE,
+      payload: lang,
+    });
     i18n.changeLanguage(lang);
   }
 

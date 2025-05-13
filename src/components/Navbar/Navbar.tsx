@@ -1,15 +1,24 @@
-import { NavLink } from "react-router-dom";
 import lightImage from "../../assets/light.svg";
+import darkImage from "../../assets/moon.svg";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   GeneralContext,
   GeneralContextAction,
 } from "../context/GeneralContext";
+import { Drawer } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import NavLinks from "./NavLinks";
 
 function Navbar() {
   const { t } = useTranslation();
+
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
 
   const generalContext = useContext(GeneralContext);
 
@@ -17,32 +26,30 @@ function Navbar() {
     return;
   }
 
-  const navLinkClass = ({ isActive }: { isActive: boolean }) => {
-    return `${isActive && "text-blue-600"}`;
-  };
+  const { state } = generalContext;
 
   return (
     <div className="flex flex-row justify-between items-center p-5 shadow-md">
-      <h1 className="text-3xl font-extrabold font-[Tagesschrift]">
-        {t("logo")}
-      </h1>
-      <nav>
+      <div className="flex flex-row gap-3 items-center">
+        <div className="sm:hidden">
+          <button onClick={toggleDrawer(true)}>
+            <MenuIcon fontSize="large" />
+          </button>
+          <Drawer open={open} onClose={toggleDrawer(false)}>
+            <nav>
+              <ul className="flex flex-col items-center p-5 mt-10 gap-5 text-xl w-[50vw]">
+                <NavLinks />
+              </ul>
+            </nav>
+          </Drawer>
+        </div>
+        <h1 className="text-3xl font-extrabold font-[Tagesschrift]">
+          {t("logo")}
+        </h1>
+      </div>
+      <nav className="hidden sm:block">
         <ul className="flex flex-row gap-5 text-lg">
-          <li>
-            <NavLink className={navLinkClass} to="/">
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={navLinkClass} to="/about">
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={navLinkClass} to="/todos">
-              Todos
-            </NavLink>
-          </li>
+          <NavLinks />
         </ul>
       </nav>
       <div className="flex flex-row items-center gap-5">
@@ -52,7 +59,11 @@ function Navbar() {
           }}
           className="flex justify-center items-center w-10 h-10 border-2 border-black rounded-md hover:opacity-70 active:op"
         >
-          <img className="h-7 w-7" src={lightImage} alt="light mode" />
+          <img
+            className="h-7 w-7"
+            src={state.themeMode === "light" ? lightImage : darkImage}
+            alt="light mode"
+          />
         </button>
         <LanguageSelector />
       </div>
