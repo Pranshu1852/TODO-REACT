@@ -6,7 +6,7 @@ function TodoLayout() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col m-10">
+    <div className="flex flex-col gap-10 m-10">
       <div className="flex flex-col gap-10 border-2 border-black rounded-md font-[Tagesschrift] p-5">
         <div className="flex flex-row gap-2 items-center">
           <AssignmentTurnedInIcon />
