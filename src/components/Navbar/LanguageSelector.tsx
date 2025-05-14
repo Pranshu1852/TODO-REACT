@@ -3,7 +3,7 @@ import { useContext } from "react";
 import {
   GeneralContext,
   GeneralContextAction,
-} from "../context/GeneralContext";
+} from "../../context/GeneralContext";
 import { useTranslation } from "react-i18next";
 
 function LanguageSelector() {

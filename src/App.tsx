@@ -2,11 +2,11 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import { useTranslation } from "react-i18next";
 import { useContext, useEffect } from "react";
-import { GeneralContext } from "./components/context/GeneralContext";
-import TodoLayout from "./components/Todos/TodoLayout";
-import TodosPage from "./components/Todos/TodosPage";
-import TodoDetailPage from "./components/Todos/Viewtodo/TodoDetailPage";
-import AddTodoPage from "./components/Todos/Addtodo/AddTodoPage";
+import { GeneralContext } from "./context/GeneralContext";
+import TodoLayout from "./features/Todos/TodoLayout";
+import TodosPage from "./features/Todos/pages/TodosPage";
+import TodoDetailPage from "./features/Todos/pages/TodoDetailPage";
+import AddTodoPage from "./features/Todos/pages/AddTodoPage";
 
 function App() {
   const { i18n } = useTranslation();

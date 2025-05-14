@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import {
   GeneralContext,
   GeneralContextAction,
-} from "../context/GeneralContext";
+} from "../../context/GeneralContext";
 import { Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavLinks from "./NavLinks";
