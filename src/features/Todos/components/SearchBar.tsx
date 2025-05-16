@@ -5,7 +5,7 @@ function SearchBar() {
     <div className="flex flex-row items-center gap-2 border-2 border-black p-2 rounded-lg w-full">
       <SearchIcon />
       <input
-        className="outline-none w-full placeholder:text-gray-950"
+        className="outline-none bg-transparent w-full"
         type="text"
         placeholder="Search Todo..."
       />

@@ -11,7 +11,8 @@ export default {
         "autofill-250": 'repeat(auto-fill, minmax(250px, 1fr))'
       },
       backgroundImage:{
-        "todo": "linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url(https://t4.ftcdn.net/jpg/04/15/42/27/360_F_415422702_Rkojk31mAW6my2wdAZnWL8jtvY1aCErU.jpg)"
+        "todo-60": "linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url(https://t4.ftcdn.net/jpg/04/15/42/27/360_F_415422702_Rkojk31mAW6my2wdAZnWL8jtvY1aCErU.jpg)",
+        "todo-100": "linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url(https://t4.ftcdn.net/jpg/04/15/42/27/360_F_415422702_Rkojk31mAW6my2wdAZnWL8jtvY1aCErU.jpg)"
       }
     },
   },

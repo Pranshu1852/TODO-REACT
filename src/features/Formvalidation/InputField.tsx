@@ -12,19 +12,19 @@ interface Rules {
   message: string;
 }
 
-type TextAreaFieldProps = {
+type InputFieldProps = {
   label?: string;
   id: string;
   name: string;
   placeholder: string;
-  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  onBlur?: (value: FocusEvent<HTMLTextAreaElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (value: FocusEvent<HTMLInputElement>) => void;
   rules?: Record<string, Rules>;
   validationMode: 'onChange' | 'onBlur' | 'all';
   ref: (element: InputRef | null) => void;
-} & Omit<React.HTMLProps<HTMLTextAreaElement>,'ref'>;
+} & Omit<React.HTMLProps<HTMLInputElement>,'ref'>;
 
-function TextAreaField({
+function InputField({
   label,
   id,
   placeholder,
@@ -34,7 +34,7 @@ function TextAreaField({
   validationMode,
   ref,
   ...props
-}: TextAreaFieldProps) {
+}: InputFieldProps) {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
 
@@ -51,7 +51,7 @@ function TextAreaField({
     };
   });
 
-  function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const inputValue = event.target.value;
     setValue(inputValue);
     if (
@@ -66,7 +66,7 @@ function TextAreaField({
     }
   }
 
-  function handleBlur(event: FocusEvent<HTMLTextAreaElement>) {
+  function handleBlur(event: FocusEvent<HTMLInputElement>) {
     if (
       validationMode &&
       (validationMode === 'all' || validationMode === 'onBlur')
@@ -105,7 +105,7 @@ function TextAreaField({
           )}
         </label>
       )}
-      <textarea
+      <input
         className="border-[1.5px] border-black rounded-md p-2"
         value={value}
         placeholder={placeholder}
@@ -120,4 +120,4 @@ function TextAreaField({
   );
 }
 
-export default TextAreaField;
+export default InputField;

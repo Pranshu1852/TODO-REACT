@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export enum PriorityType {
   HIGH = "High",
   MEDIUM = "Medium",
@@ -19,6 +21,7 @@ interface TodoProps {
 }
 
 function Todo({ title, description, priority, status, date }: TodoProps) {
+
   const formattedDate = (function formatDate(date: Date) {
     const yyyy = date.getFullYear();
     let mm: string | number = date.getMonth() + 1;
@@ -38,30 +41,29 @@ function Todo({ title, description, priority, status, date }: TodoProps) {
     switch (priority) {
       case PriorityType.HIGH: {
         return "text-red-600";
-        break;
+       
       }
       case PriorityType.MEDIUM: {
         return "text-orange-600";
-        break;
+        
       }
       case PriorityType.LOW: {
         return "text-yellow-600";
-        break;
+    
       }
       default: {
         return "";
-        break;
+  
       }
     }
 
-    return "";
   })(priority);
 
   const statusColor = (function getPriorityColor(status: StatusType) {
     switch (status) {
       case StatusType.NOTSELECTED: {
         return "text-purple-600";
-        break;
+       
       }
       case StatusType.INPROGRESS: {
         return "text-blue-600";
@@ -81,7 +83,7 @@ function Todo({ title, description, priority, status, date }: TodoProps) {
   })(status);
 
   return (
-    <div className="flex flex-col gap-5 border-2 border-black p-5 rounded-lg bg-todo bg-cover">
+    <Link to={`123`} className="flex flex-col gap-5 border-2 border-black p-5 rounded-lg bg-todo-100 text-black bg-cover">
       <h3 className="text-2xl font-semibold font-[Tagesschrift] truncate">
         {title}
       </h3>
@@ -97,7 +99,7 @@ function Todo({ title, description, priority, status, date }: TodoProps) {
           Created at: <span>{formattedDate}</span>
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
 

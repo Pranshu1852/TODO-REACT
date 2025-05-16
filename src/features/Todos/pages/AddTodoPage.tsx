@@ -1,54 +1,121 @@
-import { useState, type ChangeEvent } from "react";
-import FormField from "../../Formvalidation/FormField";
-import { useTranslation } from "react-i18next";
-import TextAreaField from "../../Formvalidation/TextAreaField";
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import TextAreaField from '../../Formvalidation/TextAreaField';
+import InputField from '../../Formvalidation/InputField';
+import RadioGroupField from '../../Formvalidation/RadioGroupField';
+import type { InputRef } from '../../../types/Reftype';
+import { useParams } from 'react-router-dom';
 
 function AddTodoPage() {
   const { t } = useTranslation();
+  const { id } = useParams();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-  });
+  const formRefs = useRef<Record<string, InputRef | null>>({});
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>): void;
-  function handleChange(event: ChangeEvent<HTMLTextAreaElement>): void;
-  function handleChange(
-    event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
-  ) {
-    console.log(event);
-
-    setFormData((prevData) => {
-      return prevData;
-    });
-  }
+  const registerRef = (name: string) => (element: InputRef | null) => {
+    formRefs.current[name] = element;
+  };
 
   return (
-    <div className="flex w-full mt-16 p-10">
+    <div className="flex w-full mt-10 p-10">
       <form className="flex flex-col gap-10 p-7 border-2 border-black rounded-lg m-auto w-full max-w-2xl">
         <h2 className="text-2xl font-[Tagesschrift] text-center">Add ToDo</h2>
-        <div className="flex flex-col gap-4">
-          <FormField
-            label={t("Title")}
-            placeholder="Enter Todo title..."
+        <div className="flex flex-col gap-7">
+          <InputField
+            ref={registerRef('title')}
+            label="Title"
+            id="title"
             name="title"
-            id="addtitle"
-            value={formData.title}
-            onChange={handleChange}
+            placeholder="Enter todo title..."
+            rules={{
+              required: {
+                value: true,
+                message: t('This is require field.'),
+              },
+              minLength: {
+                value: 5,
+                message: t('Minimum length should be 5.'),
+              },
+            }}
+            validationMode="all"
           />
           <TextAreaField
-            label={t("Description")}
-            placeholder="Enter Todo description..."
+            ref={registerRef('description')}
+            label="Description"
+            id="description"
             name="description"
-            id="adddescription"
+            placeholder="Enter todo description..."
+            rules={{
+              required: {
+                value: true,
+                message: t('This is require field.'),
+              },
+              minLength: {
+                value: 10,
+                message: t('Minimum length should be 10.'),
+              },
+            }}
+            validationMode="all"
             rows={5}
-            value={formData.description}
-            onChange={handleChange}
           />
-          {/* <FormField label={t('Extreme')} type="radio" placeholder="Enter Todo title..." name="title" id="addtitle" value={formData.title} onChange={handleChange}/>
-                <FormField label={t('High')} type="radio" placeholder="Enter Todo title..." name="title" id="addtitle" value={formData.title} onChange={handleChange}/>
-                <FormField label={t('Low')} type="radio" placeholder="Enter Todo title..." name="title" id="addtitle" value={formData.title} onChange={handleChange}/> */}
+          <RadioGroupField
+            ref={registerRef('priority')}
+            label="Priority"
+            id="priority"
+            name="priority"
+            options={[
+              {
+                label: 'High',
+                value: 'High',
+              },
+              {
+                label: 'Medium',
+                value: 'Medium',
+              },
+              {
+                label: 'Low',
+                value: 'Low',
+              },
+            ]}
+            rules={{
+              required: {
+                value: true,
+                message: t('This is require field.'),
+              },
+            }}
+            validationMode="all"
+          />
+          {id && (
+            <RadioGroupField
+              ref={registerRef('status')}
+              label="Status"
+              id="status"
+              name="status"
+              options={[
+                {
+                  label: 'Not Started',
+                  value: 'Not Started',
+                },
+                {
+                  label: 'In Progress',
+                  value: 'In Progress',
+                },
+                {
+                  label: 'Completed',
+                  value: 'Completed',
+                },
+              ]}
+              rules={{
+                required: {
+                  value: true,
+                  message: t('This is require field.'),
+                },
+              }}
+              validationMode="all"
+            />
+          )}
         </div>
+
         <button className="bg-black text-white py-2 px-4 rounded-md m-auto">
           Create Todo
         </button>
