@@ -1,16 +1,16 @@
-import lightImage from "../../assets/light.svg";
-import darkImage from "../../assets/moon.svg";
-import LanguageSelector from "./LanguageSelector";
-import { useTranslation } from "react-i18next";
-import { useContext, useState } from "react";
+import lightImage from '../../assets/light.svg';
+import darkImage from '../../assets/moon.svg';
+import LanguageSelector from './LanguageSelector';
+import { useTranslation } from 'react-i18next';
+import { useContext, useState } from 'react';
 import {
   GeneralContext,
   GeneralContextAction,
-} from "../../context/GeneralContext";
-import { Drawer } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import NavLinks from "./NavLinks";
-import { Link } from "react-router-dom";
+} from '../../context/GeneralContext';
+import { Drawer } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import NavLinks from './NavLinks';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   const { t } = useTranslation();
@@ -45,7 +45,7 @@ function Navbar() {
           </Drawer>
         </div>
         <Link to="/" className="text-3xl font-extrabold font-[Tagesschrift]">
-          {t("logo")}
+          {t('logo')}
         </Link>
       </div>
       <nav className="hidden sm:block">
@@ -62,7 +62,7 @@ function Navbar() {
         >
           <img
             className="h-7 w-7"
-            src={state.themeMode === "light" ? lightImage : darkImage}
+            src={state.themeMode === 'light' ? lightImage : darkImage}
             alt="light mode"
           />
         </button>

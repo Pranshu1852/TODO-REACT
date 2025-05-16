@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import TextAreaField from '../../Formvalidation/TextAreaField';
 import InputField from '../../Formvalidation/InputField';
 import RadioGroupField from '../../Formvalidation/RadioGroupField';
 import type { InputRef } from '../../../types/Reftype';
 import { useParams } from 'react-router-dom';
+import { TodoContext } from '../context/TodoContext';
 
 function AddTodoPage() {
   const { t } = useTranslation();
@@ -15,6 +16,14 @@ function AddTodoPage() {
   const registerRef = (name: string) => (element: InputRef | null) => {
     formRefs.current[name] = element;
   };
+
+  const todoContext = useContext(TodoContext);
+
+  if (!todoContext) {
+    return;
+  }
+
+  console.log(todoContext.state.todoArray);
 
   return (
     <div className="flex w-full mt-10 p-10">

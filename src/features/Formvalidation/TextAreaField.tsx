@@ -22,7 +22,7 @@ type TextAreaFieldProps = {
   rules?: Record<string, Rules>;
   validationMode: 'onChange' | 'onBlur' | 'all';
   ref: (element: InputRef | null) => void;
-} & Omit<React.HTMLProps<HTMLTextAreaElement>,'ref'>;
+} & Omit<React.HTMLProps<HTMLTextAreaElement>, 'ref'>;
 
 function TextAreaField({
   label,

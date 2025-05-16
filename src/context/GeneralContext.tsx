@@ -3,7 +3,7 @@ import {
   useReducer,
   type ActionDispatch,
   type ReactNode,
-} from "react";
+} from 'react';
 
 export enum GeneralContextAction {
   TOGGLETHEME,
@@ -11,8 +11,8 @@ export enum GeneralContextAction {
 }
 
 const intialState = {
-  themeMode: localStorage.getItem("theme") ?? "light",
-  language: localStorage.getItem("lang") ?? "en",
+  themeMode: localStorage.getItem('theme') ?? 'light',
+  language: localStorage.getItem('lang') ?? 'en',
 };
 
 type GeneralContextStateType = typeof intialState;
@@ -24,12 +24,12 @@ type GeneralContextActionType = {
 
 function reducer(
   state: GeneralContextStateType,
-  action: GeneralContextActionType,
+  action: GeneralContextActionType
 ) {
   switch (action.type) {
     case GeneralContextAction.TOGGLETHEME: {
-      const newTheme = state.themeMode === "light" ? "dark" : "light";
-      localStorage.setItem("theme", newTheme);
+      const newTheme = state.themeMode === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', newTheme);
 
       return {
         ...state,
@@ -41,7 +41,7 @@ function reducer(
         return state;
       }
       const newLanguage = action.payload;
-      localStorage.setItem("lang", newLanguage);
+      localStorage.setItem('lang', newLanguage);
       return {
         ...state,
         language: newLanguage,

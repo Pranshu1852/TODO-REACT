@@ -1,8 +1,8 @@
-import AddTaskIcon from "@mui/icons-material/AddTask";
-import { Link } from "react-router-dom";
-import Todo, { PriorityType, StatusType } from "../../../components/Todo";
-import SearchBar from "../components/SearchBar";
-import { useTranslation } from "react-i18next";
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import { Link } from 'react-router-dom';
+import Todo, { PriorityType, StatusType } from '../../../components/Todo';
+import SearchBar from '../components/SearchBar';
+import { useTranslation } from 'react-i18next';
 
 function TodosPage() {
   const { t } = useTranslation();
@@ -15,27 +15,27 @@ function TodosPage() {
 
       <div className="grid grid-cols-autofill-250 sm:grid-cols-autofill-500 gap-5">
         <Todo
-          title={t("Todo Title")}
+          title={t('Todo Title')}
           description={t(
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.",
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.'
           )}
           priority={PriorityType.HIGH}
           status={StatusType.COMPLETED}
           date={new Date()}
         />
         <Todo
-          title={t("Todo Title")}
+          title={t('Todo Title')}
           description={t(
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.",
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.'
           )}
           priority={PriorityType.MEDIUM}
           status={StatusType.INPROGRESS}
           date={new Date()}
         />
         <Todo
-          title={t("Todo Title")}
+          title={t('Todo Title')}
           description={t(
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.",
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.'
           )}
           priority={PriorityType.LOW}
           status={StatusType.NOTSELECTED}
@@ -48,7 +48,7 @@ function TodosPage() {
       >
         <AddTaskIcon
           sx={{
-            color: "white",
+            color: 'white',
           }}
         />
       </Link>

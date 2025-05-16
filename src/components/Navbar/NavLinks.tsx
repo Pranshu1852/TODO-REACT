@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router-dom';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) => {
-  return `${isActive && "text-blue-600"}`;
+  return `${isActive && 'text-blue-600'}`;
 };
 
 function NavLinks() {
@@ -12,17 +12,17 @@ function NavLinks() {
     <>
       <li>
         <NavLink className={navLinkClass} to="/">
-          {t("Home")}
+          {t('Home')}
         </NavLink>
       </li>
       <li>
         <NavLink className={navLinkClass} to="/about">
-          {t("About")}
+          {t('About')}
         </NavLink>
       </li>
       <li>
         <NavLink className={navLinkClass} to="/todos">
-          {t("Todos")}
+          {t('Todos')}
         </NavLink>
       </li>
     </>

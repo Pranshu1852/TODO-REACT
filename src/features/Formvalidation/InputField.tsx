@@ -22,7 +22,7 @@ type InputFieldProps = {
   rules?: Record<string, Rules>;
   validationMode: 'onChange' | 'onBlur' | 'all';
   ref: (element: InputRef | null) => void;
-} & Omit<React.HTMLProps<HTMLInputElement>,'ref'>;
+} & Omit<React.HTMLProps<HTMLInputElement>, 'ref'>;
 
 function InputField({
   label,

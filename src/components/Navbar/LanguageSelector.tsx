@@ -1,10 +1,10 @@
-import { MenuItem, TextField } from "@mui/material";
-import { useContext } from "react";
+import { MenuItem, TextField } from '@mui/material';
+import { useContext } from 'react';
 import {
   GeneralContext,
   GeneralContextAction,
-} from "../../context/GeneralContext";
-import { useTranslation } from "react-i18next";
+} from '../../context/GeneralContext';
+import { useTranslation } from 'react-i18next';
 
 function LanguageSelector() {
   const { i18n } = useTranslation();
@@ -29,8 +29,8 @@ function LanguageSelector() {
       defaultValue="en"
       size="small"
       sx={{
-        color: "black",
-        border: "none",
+        color: 'black',
+        border: 'none',
       }}
       value={generalContext.state.language}
       onChange={(event) => {
