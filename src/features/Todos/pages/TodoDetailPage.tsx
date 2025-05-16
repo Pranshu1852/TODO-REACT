@@ -1,27 +1,54 @@
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { TodoContext, type Todo } from "../context/TodoContext";
+import { formatDate, getPriorityColor, getStatusColor } from "../../../utils/todoUtils";
+
 function TodoDetailPage() {
+  const { id } =useParams();
+  const todoContext=useContext(TodoContext);
+  const [todoData,setTodoData]=useState<Todo|undefined>(undefined);
+
+  if(!id){
+    return <h2>Please Provide valid id.</h2>
+  }
+
+  if(!todoContext){
+    return;
+  }
+
+  useEffect(()=>{
+    function findTodo(todoArray: Array<Todo>, id: string) {
+      const todo=todoArray.find((element)=>{
+          return element.id===id;
+      })
+      
+      return todo;
+    }
+
+    const todo=findTodo(todoContext.state.todoArray, id);
+    setTodoData(todo);
+  },[])
+
+  if(!todoData) {
+    return <h2>Something wrong.</h2>
+  }
+
   return (
     <div className="flex flex-col gap-10 border-2 border-black rounded-lg p-10 bg-todo-60 bg-cover text-black">
-      <h2 className="text-3xl font-bold font-[Tagesschrift]">Todo Title</h2>
+      <h2 className="text-3xl font-bold font-[Tagesschrift]">{todoData.title}</h2>
       <div className="flex flex-row gap-2 justify-between text-sm md:text-base font-medium">
         <p>
-          Priority: <span>High</span>
+          Priority: <span className={`${getPriorityColor(todoData.priority)}`}>{todoData.priority}</span>
         </p>
         <p>
-          Status: <span>Status</span>
+          Status: <span className={`${getStatusColor(todoData.status)}`}>{todoData.status}</span>
         </p>
         <p>
-          Created at: <span>14/05/2025</span>
+          Created at: <span>{formatDate(new Date(todoData.created_at))}</span>
         </p>
       </div>
       <p className="text-xl">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti
-        possimus delectus harum distinctio ab atque dolorem iste natus quae
-        numquam nemo omnis magnam earum aut consectetur, quas maiores,
-        recusandae quisquam. Consequatur esse accusamus id, quam necessitatibus
-        ex blanditiis enim molestiae unde dolores mollitia perspiciatis alias
-        nulla nostrum. Adipisci voluptatibus provident dolorem ratione veritatis
-        autem quasi vel, doloribus minima dolore reiciendis. Qui, enim, dolore
-        harum corporis .
+        {todoData.description}
       </p>
       <div className="flex flex-row gap-5 justify-between">
         <button className="text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all">

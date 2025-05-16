@@ -7,7 +7,7 @@ import {
 import storageHandler from '../../../utils/storageHandler';
 import type { PriorityType, StatusType } from '../../../components/Todo';
 
-interface Todo {
+export interface Todo {
   id: string;
   title: string;
   description: string;
@@ -17,12 +17,12 @@ interface Todo {
 }
 
 const initialState = {
-  todoArray: storageHandler.getStorage<Array<Todo>>('todos') || [],
+  todoArray: storageHandler.getStorage<Array<Todo>>('todos'),
 };
 
 type TodoContextStateType = typeof initialState;
 
-enum TodoContextActions {
+export enum TodoContextActions {
   ADDTODO,
   UPDATETODO,
   REMOVETODO,
@@ -44,7 +44,7 @@ type TodoContextActionType =
 
 function addTodo(todoArray: Array<Todo>, todo: Todo) {
   const newArray = [...todoArray, todo];
-  storageHandler.setStorage('todo', newArray);
+  storageHandler.setStorage('todos', newArray);
   return newArray;
 }
 
@@ -52,6 +52,8 @@ function reducer(state: TodoContextStateType, action: TodoContextActionType) {
   switch (action.type) {
     case TodoContextActions.ADDTODO: {
       if (action.payload) {
+        console.log('heree');
+
         return {
           todoArray: addTodo(state.todoArray, action.payload),
         };

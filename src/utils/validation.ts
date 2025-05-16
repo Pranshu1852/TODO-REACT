@@ -17,13 +17,13 @@ function ErrorCheck(
     }
     case 'minLength': {
       if (typeof value === 'number') {
-        return inputValue.length <= value;
+        return inputValue.length < value;
       }
       break;
     }
     case 'maxLength': {
       if (typeof value === 'number') {
-        return inputValue.length >= value;
+        return inputValue.length > value;
       }
       break;
     }
