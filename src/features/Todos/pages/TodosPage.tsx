@@ -1,11 +1,21 @@
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import { Link } from 'react-router-dom';
-import Todo, { PriorityType, StatusType } from '../../../components/Todo';
+import Todo from '../../../components/Todo';
 import SearchBar from '../components/SearchBar';
 import { useTranslation } from 'react-i18next';
+import { useContext } from 'react';
+import { TodoContext } from '../context/TodoContext';
 
 function TodosPage() {
   const { t } = useTranslation();
+  const todoContext = useContext(TodoContext);
+
+  if (!todoContext) {
+    return;
+  }
+
+  const { state } = todoContext;
+  console.log(state.todoArray);
 
   return (
     <div className="flex flex-col gap-10">
@@ -14,33 +24,19 @@ function TodosPage() {
       </div>
 
       <div className="grid grid-cols-autofill-250 sm:grid-cols-autofill-500 gap-5">
-        <Todo
-          title={t('Todo Title')}
-          description={t(
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.'
-          )}
-          priority={PriorityType.HIGH}
-          status={StatusType.COMPLETED}
-          date={new Date()}
-        />
-        <Todo
-          title={t('Todo Title')}
-          description={t(
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.'
-          )}
-          priority={PriorityType.MEDIUM}
-          status={StatusType.INPROGRESS}
-          date={new Date()}
-        />
-        <Todo
-          title={t('Todo Title')}
-          description={t(
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veritatis rerum assumenda illum libero eum eveniet, quaerat doloribus nostrum totam possimus fuga in blanditiis dolor adipisci aliquam odio veniam natus.'
-          )}
-          priority={PriorityType.LOW}
-          status={StatusType.NOTSELECTED}
-          date={new Date()}
-        />
+        {state.todoArray.map((item) => {
+          return (
+            <Todo
+              key={item.id}
+              id={item.id}
+              title={t(`${item.title}`)}
+              description={t(`${item.description}`)}
+              priority={item.priority}
+              status={item.status}
+              date={new Date(item.created_at)}
+            />
+          );
+        })}
       </div>
       <Link
         to="/addtodo"
