@@ -52,8 +52,6 @@ function reducer(state: TodoContextStateType, action: TodoContextActionType) {
   switch (action.type) {
     case TodoContextActions.ADDTODO: {
       if (action.payload) {
-        console.log('heree');
-
         return {
           todoArray: addTodo(state.todoArray, action.payload),
         };

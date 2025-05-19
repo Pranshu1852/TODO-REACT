@@ -15,7 +15,6 @@ function TodosPage() {
   }
 
   const { state } = todoContext;
-  console.log(state.todoArray);
 
   return (
     <div className="flex flex-col gap-10">
