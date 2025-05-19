@@ -60,7 +60,7 @@ function TodoDetailPage() {
           </span>
         </p>
         <p>
-          Created at: <span>{formatDate(new Date(todoData.created_at))}</span>
+          Created at: <span>{formatDate(todoData.created_at)}</span>
         </p>
       </div>
       <p className="text-xl">{todoData.description}</p>

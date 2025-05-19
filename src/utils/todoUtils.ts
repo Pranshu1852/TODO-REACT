@@ -1,9 +1,10 @@
 import { PriorityType, StatusType } from '../components/Todo';
 
 function formatDate(date: Date) {
-  const yyyy = date.getFullYear();
-  let mm: string | number = date.getMonth() + 1;
-  let dd: string | number = date.getDate();
+  const newDate = new Date(date);
+  const yyyy = newDate.getFullYear();
+  let mm: string | number = newDate.getMonth() + 1;
+  let dd: string | number = newDate.getDate();
 
   if (dd < 10) {
     dd = '0' + dd;

@@ -33,7 +33,7 @@ function TodosPage() {
               description={t(`${item.description}`)}
               priority={item.priority}
               status={item.status}
-              date={new Date(item.created_at)}
+              date={item.created_at}
             />
           );
         })}
