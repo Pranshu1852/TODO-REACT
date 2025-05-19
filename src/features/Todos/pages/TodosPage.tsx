@@ -1,9 +1,10 @@
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+
 import Todo from '../../../components/Todo';
 import SearchBar from '../components/SearchBar';
-import { useTranslation } from 'react-i18next';
-import { useContext } from 'react';
 import { TodoContext } from '../context/TodoContext';
 
 function TodosPage() {

@@ -1,12 +1,13 @@
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
-import { useTranslation } from 'react-i18next';
 import { useContext, useEffect } from 'react';
-import { GeneralContext } from './context/GeneralContext';
-import TodoLayout from './features/Todos/TodoLayout';
-import TodosPage from './features/Todos/pages/TodosPage';
-import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
+import { useTranslation } from 'react-i18next';
+import { Routes, Route } from 'react-router-dom';
+
+import Navbar from './components/Navbar/Navbar';
+import GeneralContext from './context/GeneralContext';
 import AddTodoPage from './features/Todos/pages/AddTodoPage';
+import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
+import TodosPage from './features/Todos/pages/TodosPage';
+import TodoLayout from './features/Todos/TodoLayout';
 
 function App() {
   const { i18n } = useTranslation();
@@ -17,7 +18,7 @@ function App() {
     if (generalContext) {
       i18n.changeLanguage(generalContext.state.language);
     }
-  }, []);
+  });
 
   useEffect(() => {
     document.body.dir = i18n.dir();

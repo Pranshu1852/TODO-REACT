@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { useTranslation } from 'react-i18next';
+import { Outlet } from 'react-router-dom';
 
 function TodoLayout() {
   const { t } = useTranslation();

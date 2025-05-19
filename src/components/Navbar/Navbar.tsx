@@ -1,16 +1,17 @@
+import MenuIcon from '@mui/icons-material/Menu';
+import { Drawer } from '@mui/material';
+import { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
 import lightImage from '../../assets/light.svg';
 import darkImage from '../../assets/moon.svg';
+import GeneralContext from '../../context/GeneralContext';
+import { GeneralContextAction } from '../../types/GeneralContextType';
+
 import LanguageSelector from './LanguageSelector';
-import { useTranslation } from 'react-i18next';
-import { useContext, useState } from 'react';
-import {
-  GeneralContext,
-  GeneralContextAction,
-} from '../../context/GeneralContext';
-import { Drawer } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import NavLinks from './NavLinks';
-import { Link } from 'react-router-dom';
+
 
 function Navbar() {
   const { t } = useTranslation();

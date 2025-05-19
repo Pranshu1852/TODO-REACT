@@ -4,8 +4,9 @@ import {
   type ChangeEvent,
   type FocusEvent,
 } from 'react';
-import { ErrorCheck } from '../../utils/validation';
+
 import type { InputRef } from '../../types/Reftype';
+import { ErrorCheck } from '../../utils/validation';
 
 interface Rules {
   value: boolean | number | string | RegExp;

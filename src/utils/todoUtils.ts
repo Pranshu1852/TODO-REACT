@@ -1,4 +1,5 @@
-import { PriorityType, StatusType } from '../components/Todo';
+import { PriorityType, StatusType } from "../types/Todotypes";
+
 
 function formatDate(date: Date) {
   const newDate = new Date(date);

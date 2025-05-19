@@ -1,21 +1,13 @@
 import { Link } from 'react-router-dom';
+
+import type { PriorityType, StatusType } from '../types/Todotypes';
 import {
   formatDate,
   getPriorityColor,
   getStatusColor,
 } from '../utils/todoUtils';
 
-export enum PriorityType {
-  HIGH = 'High',
-  MEDIUM = 'Medium',
-  LOW = 'Low',
-}
 
-export enum StatusType {
-  NOTSELECTED = 'Not Started',
-  INPROGRESS = 'In Progress',
-  COMPLETED = 'Completed',
-}
 
 interface TodoProps {
   title: string;

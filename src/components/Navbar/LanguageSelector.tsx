@@ -1,10 +1,9 @@
 import { MenuItem, TextField } from '@mui/material';
 import { useContext } from 'react';
-import {
-  GeneralContext,
-  GeneralContextAction,
-} from '../../context/GeneralContext';
 import { useTranslation } from 'react-i18next';
+
+import GeneralContext from '../../context/GeneralContext';
+import { GeneralContextAction } from '../../types/GeneralContextType';
 
 function LanguageSelector() {
   const { i18n } = useTranslation();

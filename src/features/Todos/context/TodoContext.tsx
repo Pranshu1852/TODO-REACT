@@ -4,8 +4,9 @@ import {
   type ActionDispatch,
   type ReactNode,
 } from 'react';
+
+import type { PriorityType, StatusType } from '../../../types/Todotypes';
 import storageHandler from '../../../utils/storageHandler';
-import type { PriorityType, StatusType } from '../../../components/Todo';
 
 export interface Todo {
   id: string;
