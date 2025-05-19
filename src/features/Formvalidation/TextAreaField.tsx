@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useImperativeHandle,
   useState,
   type ChangeEvent,
@@ -18,6 +19,7 @@ type TextAreaFieldProps = {
   id: string;
   name: string;
   placeholder: string;
+  value: string;
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onBlur?: (value: FocusEvent<HTMLTextAreaElement>) => void;
   rules?: Record<string, Rules>;
@@ -34,10 +36,17 @@ function TextAreaField({
   rules,
   validationMode,
   ref,
+  value: data,
   ...props
 }: TextAreaFieldProps) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(data ?? '');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (data) {
+      setValue(data);
+    }
+  }, [data]);
 
   useImperativeHandle(ref, () => {
     return {

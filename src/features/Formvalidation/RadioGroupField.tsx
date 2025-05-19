@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useImperativeHandle,
   useState,
   type ChangeEvent,
@@ -23,6 +24,7 @@ type RadioGroupFieldProps = {
   id: string;
   name: string;
   options: Array<Option>;
+  value?: string;
   rules?: Record<string, Rules>;
   validationMode: 'onChange' | 'onBlur' | 'all';
   ref: (element: InputRef | null) => void;
@@ -40,9 +42,16 @@ function RadioGroupField({
   rules,
   validationMode,
   ref,
+  value: data,
 }: RadioGroupFieldProps) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(data ?? '');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (data) {
+      setValue(data);
+    }
+  }, [data]);
 
   useImperativeHandle(ref, () => {
     return {
@@ -121,6 +130,7 @@ function RadioGroupField({
               value={element.value}
               changeEvent={handleChange}
               blurEvent={handleBlur}
+              data={value}
             />
           );
         })}
@@ -136,9 +146,10 @@ type RadioFieldProps = {
   label: string;
   name: string;
   value: string;
+  data?: string;
   changeEvent: (event: ChangeEvent<HTMLInputElement>) => void;
   blurEvent: (event: FocusEvent<HTMLInputElement>) => void;
-};
+} & Omit<React.HTMLProps<HTMLInputElement>, 'ref'>;
 
 function RadioField({
   label,
@@ -146,6 +157,7 @@ function RadioField({
   value,
   changeEvent,
   blurEvent,
+  data,
 }: RadioFieldProps) {
   return (
     <div className="flex flex-row gap-3 items-center font-medium">
@@ -156,6 +168,7 @@ function RadioField({
         value={value}
         onChange={changeEvent}
         onBlur={blurEvent}
+        checked={data ? data === value : undefined}
       />
       <label htmlFor={value}>{label}</label>
     </div>

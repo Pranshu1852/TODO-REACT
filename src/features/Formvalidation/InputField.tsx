@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useImperativeHandle,
   useState,
   type ChangeEvent,
@@ -18,6 +19,7 @@ type InputFieldProps = {
   id: string;
   name: string;
   placeholder: string;
+  value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (value: FocusEvent<HTMLInputElement>) => void;
   rules?: Record<string, Rules>;
@@ -34,10 +36,17 @@ function InputField({
   rules,
   validationMode,
   ref,
+  value: data,
   ...props
 }: InputFieldProps) {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (data) {
+      setValue(data);
+    }
+  }, [data]);
 
   useImperativeHandle(ref, () => {
     return {

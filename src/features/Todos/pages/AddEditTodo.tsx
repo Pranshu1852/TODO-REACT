@@ -1,4 +1,4 @@
-import { useContext, useRef, type FormEvent } from 'react';
+import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -15,13 +15,31 @@ function AddEditTodo() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const todoContext = useContext(TodoContext);
+  const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+
+  useEffect(() => {
+    function findTodo(todoArray: Array<Todo>, id: string) {
+      const todo = todoArray.find((element) => {
+        return element.id === id;
+      });
+
+      return todo;
+    }
+
+    if (!todoContext || !id) {
+      return;
+    }
+
+    const todo = findTodo(todoContext.state.todoArray, id);
+    setTodoData(todo);
+  }, [id, todoContext]);
+
   const formRefs = useRef<Record<string, InputRef | null>>({});
 
   const registerRef = (name: string) => (element: InputRef | null) => {
     formRefs.current[name] = element;
   };
-
-  const todoContext = useContext(TodoContext);
 
   if (!todoContext) {
     return;
@@ -53,7 +71,7 @@ function AddEditTodo() {
       title: data.title,
       description: data.description,
       priority: data.priority as PriorityType,
-      status: StatusType.NOTSELECTED,
+      status: (data.status as StatusType) ?? StatusType.NOTSELECTED,
       created_at: new Date(),
     };
 
@@ -67,7 +85,9 @@ function AddEditTodo() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-10 p-7 border-2 border-black rounded-lg m-auto w-full max-w-2xl"
       >
-        <h2 className="text-2xl font-[Tagesschrift] text-center">{id ? 'Edit':'Add'} ToDo</h2>
+        <h2 className="text-2xl font-[Tagesschrift] text-center">
+          {id ? 'Edit' : 'Add'} ToDo
+        </h2>
         <div className="flex flex-col gap-7">
           <InputField
             ref={registerRef('title')}
@@ -75,6 +95,7 @@ function AddEditTodo() {
             id="title"
             name="title"
             placeholder="Enter todo title..."
+            value={todoData ? todoData.title : ''}
             rules={{
               required: {
                 value: true,
@@ -93,6 +114,7 @@ function AddEditTodo() {
             id="description"
             name="description"
             placeholder="Enter todo description..."
+            value={todoData ? todoData.description : ''}
             rules={{
               required: {
                 value: true,
@@ -111,6 +133,7 @@ function AddEditTodo() {
             label="Priority"
             id="priority"
             name="priority"
+            value={todoData ? todoData.priority : ''}
             options={[
               {
                 label: 'High',
@@ -139,6 +162,7 @@ function AddEditTodo() {
               label="Status"
               id="status"
               name="status"
+              value={todoData ? todoData.status : ''}
               options={[
                 {
                   label: 'Not Started',
