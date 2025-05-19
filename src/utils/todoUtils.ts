@@ -39,19 +39,14 @@ function getStatusColor(status: StatusType) {
     }
     case StatusType.INPROGRESS: {
       return 'text-blue-600';
-      break;
     }
     case StatusType.COMPLETED: {
       return 'text-green-600';
-      break;
     }
     default: {
       return '';
-      break;
     }
   }
-
-  return '';
 }
 
 export { formatDate, getPriorityColor, getStatusColor };
