@@ -29,7 +29,7 @@ function TodoDetailPage() {
 
     const todo = findTodo(todoContext.state.todoArray, id);
     setTodoData(todo);
-  }, []);
+  }, [id, todoContext]);
 
   if (!id) {
     return <h2>Please Provide valid id.</h2>;

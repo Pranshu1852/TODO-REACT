@@ -18,7 +18,7 @@ function App() {
     if (generalContext) {
       i18n.changeLanguage(generalContext.state.language);
     }
-  });
+  },[i18n, generalContext]);
 
   useEffect(() => {
     document.body.dir = i18n.dir();
