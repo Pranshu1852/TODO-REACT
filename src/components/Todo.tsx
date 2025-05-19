@@ -7,8 +7,6 @@ import {
   getStatusColor,
 } from '../utils/todoUtils';
 
-
-
 interface TodoProps {
   title: string;
   description: string;

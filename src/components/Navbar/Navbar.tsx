@@ -12,7 +12,6 @@ import { GeneralContextAction } from '../../types/GeneralContextType';
 import LanguageSelector from './LanguageSelector';
 import NavLinks from './NavLinks';
 
-
 function Navbar() {
   const { t } = useTranslation();
 

@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import type { Todo } from '../../../types/TodoContextType';
 import {
   formatDate,
   getPriorityColor,
   getStatusColor,
 } from '../../../utils/todoUtils';
-import { TodoContext, type Todo } from '../context/TodoContext';
+import TodoContext from '../context/TodoContext';
 
 function TodoDetailPage() {
   const { id } = useParams();
@@ -28,7 +29,7 @@ function TodoDetailPage() {
 
     const todo = findTodo(todoContext.state.todoArray, id);
     setTodoData(todo);
-  },[]);
+  }, []);
 
   if (!id) {
     return <h2>Please Provide valid id.</h2>;

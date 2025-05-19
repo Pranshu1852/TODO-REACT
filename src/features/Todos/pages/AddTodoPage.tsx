@@ -3,15 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import type { InputRef } from '../../../types/Reftype';
+import { TodoContextActions, type Todo } from '../../../types/TodoContextType';
 import { PriorityType, StatusType } from '../../../types/Todotypes';
 import InputField from '../../Formvalidation/InputField';
 import RadioGroupField from '../../Formvalidation/RadioGroupField';
 import TextAreaField from '../../Formvalidation/TextAreaField';
-import {
-  TodoContext,
-  TodoContextActions,
-  type Todo,
-} from '../context/TodoContext';
+import TodoContext from '../context/TodoContext';
 
 function AddTodoPage() {
   const { t } = useTranslation();

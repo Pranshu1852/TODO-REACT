@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Todo from '../../../components/Todo';
 import SearchBar from '../components/SearchBar';
-import { TodoContext } from '../context/TodoContext';
+import TodoContext from '../context/TodoContext';
 
 function TodosPage() {
   const { t } = useTranslation();
