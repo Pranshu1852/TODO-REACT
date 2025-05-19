@@ -10,7 +10,7 @@ import RadioGroupField from '../../Formvalidation/RadioGroupField';
 import TextAreaField from '../../Formvalidation/TextAreaField';
 import TodoContext from '../context/TodoContext';
 
-function AddTodoPage() {
+function AddEditTodo() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ function AddTodoPage() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-10 p-7 border-2 border-black rounded-lg m-auto w-full max-w-2xl"
       >
-        <h2 className="text-2xl font-[Tagesschrift] text-center">Add ToDo</h2>
+        <h2 className="text-2xl font-[Tagesschrift] text-center">{id ? 'Edit':'Add'} ToDo</h2>
         <div className="flex flex-col gap-7">
           <InputField
             ref={registerRef('title')}
@@ -165,11 +165,11 @@ function AddTodoPage() {
         </div>
 
         <button className="bg-black text-white py-2 px-4 rounded-md m-auto">
-          Create Todo
+          {id ? 'Change' : 'Create'} Todo
         </button>
       </form>
     </div>
   );
 }
 
-export default AddTodoPage;
+export default AddEditTodo;

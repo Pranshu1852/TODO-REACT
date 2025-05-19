@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar/Navbar';
 import GeneralContext from './context/GeneralContext';
-import AddTodoPage from './features/Todos/pages/AddTodoPage';
+import AddEditTodo from './features/Todos/pages/AddEditTodo';
 import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
 import TodosPage from './features/Todos/pages/TodosPage';
 import TodoLayout from './features/Todos/TodoLayout';
@@ -18,7 +18,7 @@ function App() {
     if (generalContext) {
       i18n.changeLanguage(generalContext.state.language);
     }
-  },[i18n, generalContext]);
+  }, [i18n, generalContext]);
 
   useEffect(() => {
     document.body.dir = i18n.dir();
@@ -37,7 +37,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<h2>Home</h2>} />
-        <Route path="/addtodo" element={<AddTodoPage />} />
+        <Route path="/addtodo" element={<AddEditTodo />} />
+        <Route path="/edittodo/:id" element={<AddEditTodo />} />
         <Route path="/todos" element={<TodoLayout />}>
           <Route index element={<TodosPage />} />
           <Route path="/todos/:id" element={<TodoDetailPage />} />

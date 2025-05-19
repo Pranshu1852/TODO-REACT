@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import type { Todo } from '../../../types/TodoContextType';
 import {
@@ -67,9 +67,9 @@ function TodoDetailPage() {
       </div>
       <p className="text-xl">{todoData.description}</p>
       <div className="flex flex-row gap-5 justify-between">
-        <button className="text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all">
+        <Link to={`/edittodo/${todoData.id}`} className="text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all">
           Edit
-        </button>
+        </Link>
         <button className="text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg bg-black text-white hover:bg-transparent hover:text-black transition-all">
           Delete
         </button>
