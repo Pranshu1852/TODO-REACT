@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import type { Todo } from '../../../types/TodoContextType';
+import { TodoContextActions, type Todo } from '../../../types/TodoContextType';
 import {
   formatDate,
   getPriorityColor,
@@ -13,6 +13,7 @@ function TodoDetailPage() {
   const { id } = useParams();
   const todoContext = useContext(TodoContext);
   const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+  const navigate = useNavigate();
 
   useEffect(() => {
     function findTodo(todoArray: Array<Todo>, id: string) {
@@ -41,6 +42,15 @@ function TodoDetailPage() {
 
   if (!todoData) {
     return <h2>Something wrong.</h2>;
+  }
+
+  const { dispatch } = todoContext;
+
+  function handleDelete() {
+    if (id) {
+      dispatch({ type: TodoContextActions.REMOVETODO, payload: id });
+      navigate('/todos');
+    }
   }
 
   return (
@@ -73,7 +83,10 @@ function TodoDetailPage() {
         >
           Edit
         </Link>
-        <button className="text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg bg-black text-white hover:bg-transparent hover:text-black transition-all">
+        <button
+          onClick={handleDelete}
+          className="text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg bg-black text-white hover:bg-transparent hover:text-black transition-all"
+        >
           Delete
         </button>
       </div>
