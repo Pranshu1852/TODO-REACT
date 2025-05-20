@@ -67,15 +67,20 @@ function AddEditTodo() {
     }
 
     const todo: Todo = {
-      id: crypto.randomUUID(),
+      id: id ?? crypto.randomUUID(),
       title: data.title,
       description: data.description,
       priority: data.priority as PriorityType,
       status: (data.status as StatusType) ?? StatusType.NOTSELECTED,
-      created_at: new Date(),
+      created_at: todoData ? todoData.created_at : new Date(),
     };
 
-    dispatch({ type: TodoContextActions.ADDTODO, payload: todo });
+    if (id) {
+      dispatch({ type: TodoContextActions.UPDATETODO, payload: todo });
+    } else {
+      dispatch({ type: TodoContextActions.ADDTODO, payload: todo });
+    }
+
     navigate('/todos');
   }
 

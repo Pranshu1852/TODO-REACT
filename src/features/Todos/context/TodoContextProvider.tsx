@@ -20,6 +20,23 @@ function addTodo(todoArray: Array<Todo>, todo: Todo) {
   return newArray;
 }
 
+function updateTodo(todoArray: Array<Todo>, updateTodo: Todo) {
+  const updateArray = todoArray.map((element) => {
+    if (element.id === updateTodo.id) {
+      return {
+        ...element,
+        ...updateTodo,
+      };
+    }
+
+    return element;
+  });
+
+  storageHandler.setStorage('todos', updateArray);
+
+  return updateArray;
+}
+
 function reducer(state: TodoContextStateType, action: TodoContextActionType) {
   switch (action.type) {
     case TodoContextActions.ADDTODO: {
@@ -32,6 +49,12 @@ function reducer(state: TodoContextStateType, action: TodoContextActionType) {
       return state;
     }
     case TodoContextActions.UPDATETODO: {
+      if (action.payload) {
+        return {
+          todoArray: updateTodo(state.todoArray, action.payload),
+        };
+      }
+
       return state;
     }
     case TodoContextActions.REMOVETODO: {
