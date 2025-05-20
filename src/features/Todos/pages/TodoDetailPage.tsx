@@ -8,11 +8,13 @@ import {
   getStatusColor,
 } from '../../../utils/todoUtils';
 import TodoContext from '../context/TodoContext';
+import { useErrorBoundary } from 'react-error-boundary';
 
 function TodoDetailPage() {
   const { id } = useParams();
   const todoContext = useContext(TodoContext);
   const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+  const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
     function findTodo(todoArray: Array<Todo>, id: string) {
@@ -28,19 +30,17 @@ function TodoDetailPage() {
     }
 
     const todo = findTodo(todoContext.state.todoArray, id);
+    
+    if(!todo){
+      showBoundary('Please Enter Valid ID');
+      return;
+    }
+
     setTodoData(todo);
   }, [id, todoContext]);
 
-  if (!id) {
-    return <h2>Please Provide valid id.</h2>;
-  }
-
-  if (!todoContext) {
+  if (!id||!todoContext||!todoData) {
     return;
-  }
-
-  if (!todoData) {
-    return <h2>Something wrong.</h2>;
   }
 
   return (

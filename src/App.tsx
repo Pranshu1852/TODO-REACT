@@ -8,6 +8,10 @@ import AddTodoPage from './features/Todos/pages/AddTodoPage';
 import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
 import TodosPage from './features/Todos/pages/TodosPage';
 import TodoLayout from './features/Todos/TodoLayout';
+import { ErrorBoundary } from 'react-error-boundary';
+import About from './features/About';
+import NotFound from './components/NotFound';
+import MainLayout from './layouts/MainLayout';
 
 function App() {
   const { i18n } = useTranslation();
@@ -28,21 +32,24 @@ function App() {
     return;
   }
 
-  const { state } = generalContext;
+  const { state } = generalContext;  
 
   return (
     <div
       className={`flex flex-col min-h-[100vh] font-[Montserrat] ${state.themeMode === 'light' ? 'bg-white text-black' : 'bg-[#333] text-white'}`}
     >
-      <Navbar />
       <Routes>
-        <Route path="/" element={<h2>Home</h2>} />
-        <Route path="/addtodo" element={<AddTodoPage />} />
-        <Route path="/todos" element={<TodoLayout />}>
-          <Route index element={<TodosPage />} />
-          <Route path="/todos/:id" element={<TodoDetailPage />} />
-        </Route>
-        <Route path="/about" element={<h2>About</h2>} />
+        <Route path="/" element={<MainLayout/>} >
+          <Route index element={<h1>Home</h1>}/>
+          <Route path="/addtodo" element={<AddTodoPage />} />
+          <Route path="/todos" element={<TodoLayout />}>
+            <Route index element={<TodosPage />} />
+            <Route path="/todos/:id" element={<TodoDetailPage />} />
+          </Route>
+          
+          <Route path="/about" element={<About/>} />
+          </Route>  
+        <Route path='/*' element={<NotFound />}/>
       </Routes>
     </div>
   );
