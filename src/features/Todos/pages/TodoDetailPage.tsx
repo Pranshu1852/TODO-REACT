@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
 import { useParams } from 'react-router-dom';
 
 import type { Todo } from '../../../types/TodoContextType';
@@ -8,7 +9,6 @@ import {
   getStatusColor,
 } from '../../../utils/todoUtils';
 import TodoContext from '../context/TodoContext';
-import { useErrorBoundary } from 'react-error-boundary';
 
 function TodoDetailPage() {
   const { id } = useParams();
@@ -30,16 +30,16 @@ function TodoDetailPage() {
     }
 
     const todo = findTodo(todoContext.state.todoArray, id);
-    
-    if(!todo){
+
+    if (!todo) {
       showBoundary('Please Enter Valid ID');
       return;
     }
 
     setTodoData(todo);
-  }, [id, todoContext]);
+  }, [id, todoContext, showBoundary]);
 
-  if (!id||!todoContext||!todoData) {
+  if (!id || !todoContext || !todoData) {
     return;
   }
 

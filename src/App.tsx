@@ -2,15 +2,12 @@ import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Routes, Route } from 'react-router-dom';
 
-import Navbar from './components/Navbar/Navbar';
+import NotFound from './components/NotFound';
 import GeneralContext from './context/GeneralContext';
 import AddTodoPage from './features/Todos/pages/AddTodoPage';
 import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
 import TodosPage from './features/Todos/pages/TodosPage';
 import TodoLayout from './features/Todos/TodoLayout';
-import { ErrorBoundary } from 'react-error-boundary';
-import About from './features/About';
-import NotFound from './components/NotFound';
 import MainLayout from './layouts/MainLayout';
 
 function App() {
@@ -22,7 +19,7 @@ function App() {
     if (generalContext) {
       i18n.changeLanguage(generalContext.state.language);
     }
-  },[i18n, generalContext]);
+  }, [i18n, generalContext]);
 
   useEffect(() => {
     document.body.dir = i18n.dir();
@@ -32,24 +29,24 @@ function App() {
     return;
   }
 
-  const { state } = generalContext;  
+  const { state } = generalContext;
 
   return (
     <div
       className={`flex flex-col min-h-[100vh] font-[Montserrat] ${state.themeMode === 'light' ? 'bg-white text-black' : 'bg-[#333] text-white'}`}
     >
       <Routes>
-        <Route path="/" element={<MainLayout/>} >
-          <Route index element={<h1>Home</h1>}/>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<h2>Home</h2>} />
           <Route path="/addtodo" element={<AddTodoPage />} />
           <Route path="/todos" element={<TodoLayout />}>
             <Route index element={<TodosPage />} />
             <Route path="/todos/:id" element={<TodoDetailPage />} />
           </Route>
-          
-          <Route path="/about" element={<About/>} />
-          </Route>  
-        <Route path='/*' element={<NotFound />}/>
+
+          <Route path="/about" element={<h2>About</h2>} />
+        </Route>
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </div>
   );
