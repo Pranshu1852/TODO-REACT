@@ -1,0 +1,81 @@
+import { useContext, useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
+import { useParams } from 'react-router-dom';
+
+import type { Todo } from '../../../types/TodoContextType';
+import {
+  formatDate,
+  getPriorityColor,
+  getStatusColor,
+} from '../../../utils/todoUtils';
+import TodoContext from '../context/TodoContext';
+
+function TodoDetailPage() {
+  const { id } = useParams();
+  const todoContext = useContext(TodoContext);
+  const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+  const { showBoundary } = useErrorBoundary();
+
+  useEffect(() => {
+    function findTodo(todoArray: Array<Todo>, id: string) {
+      const todo = todoArray.find((element) => {
+        return element.id === id;
+      });
+
+      return todo;
+    }
+
+    if (!todoContext || !id) {
+      return;
+    }
+
+    const todo = findTodo(todoContext.state.todoArray, id);
+
+    if (!todo) {
+      showBoundary('Please Enter Valid ID');
+      return;
+    }
+
+    setTodoData(todo);
+  }, [id, todoContext, showBoundary]);
+
+  if (!id || !todoContext || !todoData) {
+    return;
+  }
+
+  return (
+    <div className="flex flex-col gap-10 border-2 border-black rounded-lg p-10 bg-todo-60 bg-cover text-black">
+      <h2 className="text-3xl font-bold font-[Tagesschrift]">
+        {todoData.title}
+      </h2>
+      <div className="flex flex-row gap-2 justify-between text-sm md:text-base font-medium">
+        <p>
+          Priority:{' '}
+          <span className={`${getPriorityColor(todoData.priority)}`}>
+            {todoData.priority}
+          </span>
+        </p>
+        <p>
+          Status:{' '}
+          <span className={`${getStatusColor(todoData.status)}`}>
+            {todoData.status}
+          </span>
+        </p>
+        <p>
+          Created at: <span>{formatDate(todoData.created_at)}</span>
+        </p>
+      </div>
+      <p className="text-xl">{todoData.description}</p>
+      <div className="flex flex-row gap-5 justify-between">
+        <button className="text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all">
+          Edit
+        </button>
+        <button className="text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg bg-black text-white hover:bg-transparent hover:text-black transition-all">
+          Delete
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default TodoDetailPage;
