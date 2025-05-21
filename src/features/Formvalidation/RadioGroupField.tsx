@@ -168,7 +168,7 @@ function RadioField({
         value={value}
         onChange={changeEvent}
         onBlur={blurEvent}
-        checked={data ? data === value : undefined}
+        checked={data ? data === value : false}
       />
       <label htmlFor={value}>{label}</label>
     </div>

@@ -116,7 +116,7 @@ function TextAreaField({
         </label>
       )}
       <textarea
-        className="border-[1.5px] border-black rounded-md p-2"
+        className="border-[1.5px] border-black rounded-md p-2 bg-transparent"
         value={value}
         placeholder={placeholder}
         onChange={handleChange}

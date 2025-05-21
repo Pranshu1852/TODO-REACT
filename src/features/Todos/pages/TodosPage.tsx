@@ -1,32 +1,135 @@
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import { useContext } from 'react';
+import { useContext, useEffect, useState, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
-import Todo from '../../../components/Todo';
+import TodoComponent from '../../../components/Todo';
+import type { Todo } from '../../../types/TodoContextType';
 import SearchBar from '../components/SearchBar';
 import TodoContext from '../context/TodoContext';
+import MultipleSelectChip from '../components/MultiSelect';
+import { PriorityType, StatusType } from '../../../types/Todotypes';
+import { filterArray, searchArray } from '../../../utils/FilterUtils';
 
 function TodosPage() {
   const { t } = useTranslation();
   const todoContext = useContext(TodoContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location=useLocation();
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    if (todoContext) {
+      setTodos(todoContext.state.todoArray);
+    }
+  }, [todoContext]);
+
+  useEffect(() => {
+    if (
+      todoContext &&
+      (searchParams.has('search') ||
+        searchParams.has('priority') ||
+        searchParams.has('status'))
+    ) {
+      console.log('here');
+
+      let filterTodos = todoContext.state.todoArray;
+
+      if (searchParams.has('search')) {
+        console.log('seaching');
+
+        filterTodos = searchArray(
+          todoContext.state.todoArray,
+          searchParams.get('search')
+        );
+      }
+
+      if (searchParams.has('priority')) {
+        console.log('priority...');
+        
+        filterTodos = filterArray(
+          filterTodos,
+          searchParams.get('priority')!.split(','),
+          'priority'
+        );
+      }
+
+      if (searchParams.has('status')) {
+        console.log('status...');
+        filterTodos = filterArray(
+          filterTodos,
+          searchParams.get('status')!.split(','),
+          'status'
+        );
+      }
+
+      console.log(filterTodos);
+
+      setTodos(filterTodos);
+    }
+  }, [todoContext, location.pathname]);
 
   if (!todoContext) {
     return;
   }
 
-  const { state } = todoContext;
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    if (!todoContext) {
+      return;
+    }
+
+    const searchQuery = event.target.value;
+
+    if (searchQuery === '') {
+      if (searchParams.has('search')) {
+        searchParams.delete('search');
+        setSearchParams(searchParams);
+      }
+    }
+    else{
+      searchParams.set('search', searchQuery);
+      setSearchParams(searchParams);
+    }
+  }
+
+  function handleFilter(value: string | string[], label: string) {
+    searchParams.set(label,value.toString());
+    setSearchParams(searchParams);
+
+    if (value.length === 0) {
+      if (searchParams.has(label)) {
+        console.log('delete label');
+
+        searchParams.delete(label);
+        setSearchParams({...searchParams});
+      }
+    }
+  }
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-row border-2 border-black p-5 rounded-lg">
-        <SearchBar />
+      <div className="flex flex-row gap-4 flex-wrap lg:flex-nowrap border-2 border-black p-5 rounded-lg">
+        <SearchBar handleChange={handleChange} />
+        <MultipleSelectChip
+          label="Priority"
+          options={[PriorityType.HIGH, PriorityType.MEDIUM, PriorityType.LOW]}
+          onChange={handleFilter}
+        />
+        <MultipleSelectChip
+          label="Status"
+          options={[
+            StatusType.NOTSELECTED,
+            StatusType.INPROGRESS,
+            StatusType.COMPLETED,
+          ]}
+          onChange={handleFilter}
+        />
       </div>
 
       <div className="grid grid-cols-autofill-250 sm:grid-cols-autofill-500 gap-5">
-        {state.todoArray.map((item) => {
+        {todos.map((item) => {
           return (
-            <Todo
+            <TodoComponent
               key={item.id}
               id={item.id}
               title={t(`${item.title}`)}
