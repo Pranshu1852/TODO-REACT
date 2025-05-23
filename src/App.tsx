@@ -1,7 +1,4 @@
-import {
-  useContext,
-  useEffect,
-} from 'react';
+import { lazy, Suspense, useContext, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useTranslation } from 'react-i18next';
 import { Routes, Route } from 'react-router-dom';
@@ -11,10 +8,12 @@ import NotFound from './components/NotFound';
 import GeneralContext from './context/GeneralContext';
 import AddEditTodo from './features/Todos/pages/AddEditTodo';
 import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
-import TodosPage from './features/Todos/pages/TodosPage';
 import TodoLayout from './features/Todos/TodoLayout';
 import MainLayout from './layouts/MainLayout';
 import { sharedRef } from './utils/sharedRef';
+import Loading from './components/Loading';
+
+const TodosPage = lazy(() => import('./features/Todos/pages/TodosPage'));
 
 function App() {
   const { i18n } = useTranslation();
@@ -41,7 +40,7 @@ function App() {
     <ErrorBoundary
       fallbackRender={ErrorFallBack}
       onReset={() => {
-        if(sharedRef.current){
+        if (sharedRef.current) {
           sharedRef.current.navigate('/');
         }
       }}
@@ -55,7 +54,14 @@ function App() {
             <Route path="/addtodo" element={<AddEditTodo />} />
             <Route path="/edittodo/:id" element={<AddEditTodo />} />
             <Route path="/todos" element={<TodoLayout />}>
-              <Route index element={<TodosPage />} />
+              <Route
+                index
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <TodosPage />
+                  </Suspense>
+                }
+              />
               <Route path="/todos/:id" element={<TodoDetailPage />} />
             </Route>
 
