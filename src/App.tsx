@@ -1,4 +1,4 @@
-import React, {
+import {
   useContext,
   useEffect,
 } from 'react';
@@ -14,9 +14,7 @@ import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
 import TodosPage from './features/Todos/pages/TodosPage';
 import TodoLayout from './features/Todos/TodoLayout';
 import MainLayout from './layouts/MainLayout';
-import type { SharedRef } from './types/Reftype';
-
-export const sharedRef = React.createRef<SharedRef>();
+import { sharedRef } from './utils/sharedRef';
 
 function App() {
   const { i18n } = useTranslation();

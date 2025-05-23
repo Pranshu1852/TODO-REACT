@@ -1,7 +1,8 @@
 import type { Todo } from '../types/TodoContextType';
 
 export function searchArray(todoArray: Todo[], searchText: string | null) {
-  if (!searchText) {
+    
+  if (!searchText||searchText==='') {   
     return todoArray;
   }
 
@@ -15,18 +16,19 @@ export function searchArray(todoArray: Todo[], searchText: string | null) {
   return filterArray;
 }
 
-export function filterArray(todoArray: Todo[], values: string | string[], key: keyof Pick<Todo,'priority' | 'status'>) {
-    console.log(values);
-    
-  if (values.length !== 0) {
-    const filterArray = todoArray.filter((element) => {
-      return (
-          values.includes(element[key])
-      );
-    });
-
-    return filterArray;
+export function filterArray(todoArray: Todo[], values: string[], key: keyof Pick<Todo,'priority' | 'status'>) {
+  if(values.length===0 || values[0]===''){
+    return todoArray;
   }
+  if (values.length !== 0 || values[0]!=="") {
+      const filterArray = todoArray.filter((element) => {
+          return (
+              values.includes(element[key])
+            );
+        });
+        
+        return filterArray;
+    }  
 
   return todoArray;
 }

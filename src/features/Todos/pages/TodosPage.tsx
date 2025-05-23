@@ -1,21 +1,20 @@
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import { useContext, useEffect, useState, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import TodoComponent from '../../../components/Todo';
 import type { Todo } from '../../../types/TodoContextType';
-import SearchBar from '../components/SearchBar';
-import TodoContext from '../context/TodoContext';
-import MultipleSelectChip from '../components/MultiSelect';
 import { PriorityType, StatusType } from '../../../types/Todotypes';
 import { filterArray, searchArray } from '../../../utils/FilterUtils';
+import MultipleSelectChip from '../components/MultiSelect';
+import SearchBar from '../components/SearchBar';
+import TodoContext from '../context/TodoContext';
 
 function TodosPage() {
   const { t } = useTranslation();
   const todoContext = useContext(TodoContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const location=useLocation();
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
@@ -25,28 +24,26 @@ function TodosPage() {
   }, [todoContext]);
 
   useEffect(() => {
+    if(!todoContext){
+      return;
+    }
+
+    let filterTodos = todoContext.state.todoArray;
     if (
       todoContext &&
       (searchParams.has('search') ||
         searchParams.has('priority') ||
         searchParams.has('status'))
     ) {
-      console.log('here');
-
-      let filterTodos = todoContext.state.todoArray;
 
       if (searchParams.has('search')) {
-        console.log('seaching');
-
         filterTodos = searchArray(
           todoContext.state.todoArray,
           searchParams.get('search')
         );
       }
 
-      if (searchParams.has('priority')) {
-        console.log('priority...');
-        
+      if (searchParams.has('priority')) {  
         filterTodos = filterArray(
           filterTodos,
           searchParams.get('priority')!.split(','),
@@ -55,7 +52,6 @@ function TodosPage() {
       }
 
       if (searchParams.has('status')) {
-        console.log('status...');
         filterTodos = filterArray(
           filterTodos,
           searchParams.get('status')!.split(','),
@@ -63,15 +59,9 @@ function TodosPage() {
         );
       }
 
-      console.log(filterTodos);
-
-      setTodos(filterTodos);
     }
-  }, [todoContext, location.pathname]);
-
-  if (!todoContext) {
-    return;
-  }
+    setTodos(filterTodos);
+  }, [todoContext, searchParams]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     if (!todoContext) {
@@ -79,16 +69,14 @@ function TodosPage() {
     }
 
     const searchQuery = event.target.value;
-
+    
+    searchParams.set('search', searchQuery);
+    setSearchParams(searchParams);
     if (searchQuery === '') {
       if (searchParams.has('search')) {
         searchParams.delete('search');
         setSearchParams(searchParams);
       }
-    }
-    else{
-      searchParams.set('search', searchQuery);
-      setSearchParams(searchParams);
     }
   }
 
@@ -98,10 +86,8 @@ function TodosPage() {
 
     if (value.length === 0) {
       if (searchParams.has(label)) {
-        console.log('delete label');
-
         searchParams.delete(label);
-        setSearchParams({...searchParams});
+        setSearchParams(searchParams);
       }
     }
   }
@@ -109,14 +95,16 @@ function TodosPage() {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-row gap-4 flex-wrap lg:flex-nowrap border-2 border-black p-5 rounded-lg">
-        <SearchBar handleChange={handleChange} />
+        <SearchBar value={searchParams.get('search') ?? ''} handleChange={handleChange} />
         <MultipleSelectChip
           label="Priority"
+          value={searchParams.get('priority')?.split(',') ?? []}
           options={[PriorityType.HIGH, PriorityType.MEDIUM, PriorityType.LOW]}
           onChange={handleFilter}
         />
         <MultipleSelectChip
           label="Status"
+          value={searchParams.get('status')?.split(',') ?? []}
           options={[
             StatusType.NOTSELECTED,
             StatusType.INPROGRESS,

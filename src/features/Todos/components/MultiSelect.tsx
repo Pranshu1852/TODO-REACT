@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { type Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import Chip from '@mui/material/Chip';
+import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { type SelectChangeEvent } from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
+import { type Theme, useTheme } from '@mui/material/styles';
+import * as React from 'react';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -29,14 +29,15 @@ function getStyles(option: string, personName: readonly string[], theme: Theme) 
 
 interface MultiSelectProps{
     label: string,
+    value: string[]
     options: string[],
     onChange: (value: string|string[], label: string) => void;
 }
 
-export default function MultipleSelectChip({label ,options, onChange}: MultiSelectProps) {
+export default function MultipleSelectChip({label ,value: initValue ,options, onChange}: MultiSelectProps) {
   const theme = useTheme();
   
-  const [data, setData] = React.useState<string[]>([]);
+  const [data, setData] = React.useState<string[]>(initValue);
 
   const handleChange = (event: SelectChangeEvent<typeof data>) => {
     const {
@@ -52,7 +53,7 @@ export default function MultipleSelectChip({label ,options, onChange}: MultiSele
 
   return (
     <div>
-      <FormControl sx={{ m: 0, width: 200, 'fieldset':{
+      <FormControl sx={{ m: 0, width: 200, '& .MuiOutlinedInput-notchedOutline':{
         border: 'solid',
         borderWidth: '2px',
         borderColor: 'black'
