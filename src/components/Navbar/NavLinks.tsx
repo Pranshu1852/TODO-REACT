@@ -11,17 +11,17 @@ function NavLinks() {
   return (
     <>
       <li>
-        <NavLink className={navLinkClass} to="/">
+        <NavLink className={navLinkClass} to='/'>
           {t('Home')}
         </NavLink>
       </li>
       <li>
-        <NavLink className={navLinkClass} to="/about">
+        <NavLink className={navLinkClass} to='/about'>
           {t('About')}
         </NavLink>
       </li>
       <li>
-        <NavLink className={navLinkClass} to="/todos">
+        <NavLink className={navLinkClass} to='/todos'>
           {t('Todos')}
         </NavLink>
       </li>

@@ -18,12 +18,12 @@ function TodosPage() {
   const { state } = todoContext;
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex flex-row border-2 border-black p-5 rounded-lg">
+    <div className='flex flex-col gap-10'>
+      <div className='flex flex-row border-2 border-black p-5 rounded-lg'>
         <SearchBar />
       </div>
 
-      <div className="grid grid-cols-autofill-250 sm:grid-cols-autofill-500 gap-5">
+      <div className='grid grid-cols-autofill-250 sm:grid-cols-autofill-500 gap-5'>
         {state.todoArray.map((item) => {
           return (
             <Todo
@@ -39,8 +39,8 @@ function TodosPage() {
         })}
       </div>
       <Link
-        to="/addtodo"
-        className="flex fixed bottom-7 right-7 bg-black p-5 rounded-full"
+        to='/addtodo'
+        className='flex fixed bottom-7 right-7 bg-black p-5 rounded-full'
       >
         <AddTaskIcon
           sx={{

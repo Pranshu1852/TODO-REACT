@@ -7,10 +7,11 @@ import {
 } from '../types/GeneralContextType';
 
 import GeneralContext from './GeneralContext';
+import storageHandler from '../utils/storageHandler';
 
 const intialState = {
-  themeMode: localStorage.getItem('theme') ?? 'light',
-  language: localStorage.getItem('lang') ?? 'en',
+  themeMode: storageHandler.getStorage<string>('theme') ?? 'light',
+  language: storageHandler.getStorage<string>('lang') ?? 'en',
 };
 
 function reducer(
@@ -20,7 +21,7 @@ function reducer(
   switch (action.type) {
     case GeneralContextAction.TOGGLETHEME: {
       const newTheme = state.themeMode === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', newTheme);
+      storageHandler.setStorage('theme', newTheme);
 
       return {
         ...state,
@@ -32,7 +33,7 @@ function reducer(
         return state;
       }
       const newLanguage = action.payload;
-      localStorage.setItem('lang', newLanguage);
+      storageHandler.setStorage('lang', newLanguage);
       return {
         ...state,
         language: newLanguage,

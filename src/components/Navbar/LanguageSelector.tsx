@@ -23,10 +23,10 @@ function LanguageSelector() {
 
   return (
     <TextField
-      id="outlined-select-currency "
+      id='outlined-select-currency '
       select
-      defaultValue="en"
-      size="small"
+      defaultValue='en'
+      size='small'
       sx={{
         color: 'black',
         border: 'none',
@@ -36,11 +36,11 @@ function LanguageSelector() {
         handleLanguageChange(event.target.value);
       }}
     >
-      <MenuItem value="en">English</MenuItem>
-      <MenuItem value="gj">Gujarati</MenuItem>
-      <MenuItem value="hi">Hindi</MenuItem>
-      <MenuItem value="fr">French</MenuItem>
-      <MenuItem value="ar">Arabic</MenuItem>
+      <MenuItem value='en'>English</MenuItem>
+      <MenuItem value='gj'>Gujarati</MenuItem>
+      <MenuItem value='hi'>Hindi</MenuItem>
+      <MenuItem value='fr'>French</MenuItem>
+      <MenuItem value='ar'>Arabic</MenuItem>
     </TextField>
   );
 }

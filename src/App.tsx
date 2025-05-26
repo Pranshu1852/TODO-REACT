@@ -36,17 +36,17 @@ function App() {
       className={`flex flex-col min-h-[100vh] font-[Montserrat] ${state.themeMode === 'light' ? 'bg-white text-black' : 'bg-[#333] text-white'}`}
     >
       <Routes>
-        <Route path="/" element={<MainLayout />}>
+        <Route path='/' element={<MainLayout />}>
           <Route index element={<h2>Home</h2>} />
-          <Route path="/addtodo" element={<AddTodoPage />} />
-          <Route path="/todos" element={<TodoLayout />}>
+          <Route path='/addtodo' element={<AddTodoPage />} />
+          <Route path='/todos' element={<TodoLayout />}>
             <Route index element={<TodosPage />} />
-            <Route path="/todos/:id" element={<TodoDetailPage />} />
+            <Route path='/todos/:id' element={<TodoDetailPage />} />
           </Route>
 
-          <Route path="/about" element={<h2>About</h2>} />
+          <Route path='/about' element={<h2>About</h2>} />
         </Route>
-        <Route path="/*" element={<NotFound />} />
+        <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>
   );

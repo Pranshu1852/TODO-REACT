@@ -62,19 +62,19 @@ function AddTodoPage() {
   }
 
   return (
-    <div className="flex w-full mt-10 p-10">
+    <div className='flex w-full mt-10 p-10'>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-10 p-7 border-2 border-black rounded-lg m-auto w-full max-w-2xl"
+        className='flex flex-col gap-10 p-7 border-2 border-black rounded-lg m-auto w-full max-w-2xl'
       >
-        <h2 className="text-2xl font-[Tagesschrift] text-center">Add ToDo</h2>
-        <div className="flex flex-col gap-7">
+        <h2 className='text-2xl font-[Tagesschrift] text-center'>Add ToDo</h2>
+        <div className='flex flex-col gap-7'>
           <InputField
             ref={registerRef('title')}
-            label="Title"
-            id="title"
-            name="title"
-            placeholder="Enter todo title..."
+            label='Title'
+            id='title'
+            name='title'
+            placeholder='Enter todo title...'
             rules={{
               required: {
                 value: true,
@@ -85,14 +85,14 @@ function AddTodoPage() {
                 message: t('Minimum length should be 3.'),
               },
             }}
-            validationMode="all"
+            validationMode='all'
           />
           <TextAreaField
             ref={registerRef('description')}
-            label="Description"
-            id="description"
-            name="description"
-            placeholder="Enter todo description..."
+            label='Description'
+            id='description'
+            name='description'
+            placeholder='Enter todo description...'
             rules={{
               required: {
                 value: true,
@@ -103,14 +103,14 @@ function AddTodoPage() {
                 message: t('Minimum length should be 10.'),
               },
             }}
-            validationMode="all"
+            validationMode='all'
             rows={5}
           />
           <RadioGroupField
             ref={registerRef('priority')}
-            label="Priority"
-            id="priority"
-            name="priority"
+            label='Priority'
+            id='priority'
+            name='priority'
             options={[
               {
                 label: 'High',
@@ -131,14 +131,14 @@ function AddTodoPage() {
                 message: t('This is require field.'),
               },
             }}
-            validationMode="all"
+            validationMode='all'
           />
           {id && (
             <RadioGroupField
               ref={registerRef('status')}
-              label="Status"
-              id="status"
-              name="status"
+              label='Status'
+              id='status'
+              name='status'
               options={[
                 {
                   label: 'Not Started',
@@ -159,12 +159,12 @@ function AddTodoPage() {
                   message: t('This is require field.'),
                 },
               }}
-              validationMode="all"
+              validationMode='all'
             />
           )}
         </div>
 
-        <button className="bg-black text-white py-2 px-4 rounded-md m-auto">
+        <button className='bg-black text-white py-2 px-4 rounded-md m-auto'>
           Create Todo
         </button>
       </form>
