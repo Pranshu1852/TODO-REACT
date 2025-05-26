@@ -5,13 +5,21 @@ interface StorageHandler {
 
 const storageHandler: StorageHandler = {
   getStorage(key: string) {
-    return localStorage.getItem(key)
-      ? JSON.parse(localStorage.getItem(key)!)
-      : [];
+    try {
+      return localStorage.getItem(key)
+        ? JSON.parse(localStorage.getItem(key)!)
+        : null;
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   setStorage(key: string, val) {
-    localStorage.setItem(key, JSON.stringify(val));
+    try {
+      localStorage.setItem(key, JSON.stringify(val));
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 

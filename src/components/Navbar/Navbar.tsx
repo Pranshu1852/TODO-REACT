@@ -15,6 +15,21 @@ import NavLinks from './NavLinks';
 function Navbar() {
   const { t } = useTranslation();
 
+  const navOptions = [
+    {
+      label: t('Home'),
+      path: '/',
+    },
+    {
+      label: t('About'),
+      path: '/about',
+    },
+    {
+      label: t('Todos'),
+      path: '/todos',
+    },
+  ];
+
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -35,7 +50,7 @@ function Navbar() {
           <Drawer open={open} onClose={toggleDrawer(false)}>
             <nav>
               <ul className='flex flex-col items-center p-5 mt-10 gap-5 text-xl font-medium w-[50vw]'>
-                <NavLinks />
+                <NavLinks options={navOptions} />
               </ul>
             </nav>
           </Drawer>
@@ -46,7 +61,7 @@ function Navbar() {
       </div>
       <nav className='hidden sm:block'>
         <ul className='flex flex-row gap-5 text-lg font-medium'>
-          <NavLinks />
+          <NavLinks options={navOptions} />
         </ul>
       </nav>
       <div className='flex flex-row items-center gap-5'>
