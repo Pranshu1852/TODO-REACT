@@ -23,10 +23,6 @@ function AddTodoPage() {
 
   const todoContext = useContext(TodoContext);
 
-  if (!todoContext) {
-    return;
-  }
-
   const { dispatch } = todoContext;
 
   function handleSubmit(event: FormEvent) {

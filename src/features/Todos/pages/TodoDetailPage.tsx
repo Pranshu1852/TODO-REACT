@@ -25,7 +25,7 @@ function TodoDetailPage() {
       return todo;
     }
 
-    if (!todoContext || !id) {
+    if (!id) {
       return;
     }
 
@@ -39,7 +39,7 @@ function TodoDetailPage() {
     setTodoData(todo);
   }, [id, todoContext, showBoundary]);
 
-  if (!id || !todoContext || !todoData) {
+  if (!id || !todoData) {
     return;
   }
 

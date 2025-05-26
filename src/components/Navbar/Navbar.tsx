@@ -23,10 +23,6 @@ function Navbar() {
 
   const generalContext = useContext(GeneralContext);
 
-  if (!generalContext) {
-    return;
-  }
-
   const { state } = generalContext;
 
   return (

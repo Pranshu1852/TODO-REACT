@@ -5,9 +5,9 @@ import {
   type GeneralContextActionType,
   type GeneralContextStateType,
 } from '../types/GeneralContextType';
+import storageHandler from '../utils/storageHandler';
 
 import GeneralContext from './GeneralContext';
-import storageHandler from '../utils/storageHandler';
 
 const intialState = {
   themeMode: storageHandler.getStorage<string>('theme') ?? 'light',

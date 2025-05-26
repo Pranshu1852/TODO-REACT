@@ -16,18 +16,12 @@ function App() {
   const generalContext = useContext(GeneralContext);
 
   useEffect(() => {
-    if (generalContext) {
-      i18n.changeLanguage(generalContext.state.language);
-    }
+    i18n.changeLanguage(generalContext.state.language);
   }, [i18n, generalContext]);
 
   useEffect(() => {
     document.body.dir = i18n.dir();
   }, [i18n, i18n.language]);
-
-  if (!generalContext) {
-    return;
-  }
 
   const { state } = generalContext;
 

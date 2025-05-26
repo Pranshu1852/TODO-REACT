@@ -9,12 +9,8 @@ function LanguageSelector() {
   const { i18n } = useTranslation();
   const generalContext = useContext(GeneralContext);
 
-  if (!generalContext) {
-    return;
-  }
-
   function handleLanguageChange(lang: string) {
-    generalContext!.dispatch({
+    generalContext.dispatch({
       type: GeneralContextAction.CHANGELANGUAGE,
       payload: lang,
     });

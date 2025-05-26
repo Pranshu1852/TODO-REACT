@@ -11,10 +11,6 @@ function TodosPage() {
   const { t } = useTranslation();
   const todoContext = useContext(TodoContext);
 
-  if (!todoContext) {
-    return;
-  }
-
   const { state } = todoContext;
 
   return (
