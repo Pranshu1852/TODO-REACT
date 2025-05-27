@@ -10,11 +10,11 @@ import ContextWrapper from './wrapper/ContexWrapper.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-      <ContextWrapper>
-        <BrowserRouter>
+    <ContextWrapper>
+      <BrowserRouter>
         <NavigationBridgeComponent />
-          <App />
-        </BrowserRouter>
-      </ContextWrapper>
+        <App />
+      </BrowserRouter>
+    </ContextWrapper>
   </StrictMode>
 );

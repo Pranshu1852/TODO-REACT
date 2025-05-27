@@ -19,7 +19,11 @@ const MenuProps = {
   },
 };
 
-function getStyles(option: string, personName: readonly string[], theme: Theme) {
+function getStyles(
+  option: string,
+  personName: readonly string[],
+  theme: Theme
+) {
   return {
     fontWeight: personName.includes(option)
       ? theme.typography.fontWeightMedium
@@ -27,16 +31,21 @@ function getStyles(option: string, personName: readonly string[], theme: Theme) 
   };
 }
 
-interface MultiSelectProps{
-    label: string,
-    value: string[]
-    options: string[],
-    onChange: (value: string|string[], label: string) => void;
+interface MultiSelectProps {
+  label: string;
+  value: string[];
+  options: string[];
+  onChange: (value: string | string[], label: string) => void;
 }
 
-export default function MultipleSelectChip({label ,value: initValue ,options, onChange}: MultiSelectProps) {
+export default function MultipleSelectChip({
+  label,
+  value: initValue,
+  options,
+  onChange,
+}: MultiSelectProps) {
   const theme = useTheme();
-  
+
   const [data, setData] = React.useState<string[]>(initValue);
 
   const handleChange = (event: SelectChangeEvent<typeof data>) => {
@@ -44,30 +53,41 @@ export default function MultipleSelectChip({label ,value: initValue ,options, on
       target: { value },
     } = event;
 
-    onChange(value,label.toLowerCase());
-    
-    setData(
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    onChange(value, label.toLowerCase());
+
+    setData(typeof value === 'string' ? value.split(',') : value);
   };
 
   return (
     <div>
-      <FormControl sx={{ m: 0, width: 200, '& .MuiOutlinedInput-notchedOutline':{
-        border: 'solid',
-        borderWidth: '2px',
-        borderColor: 'black'
-      } }}>
-        <InputLabel id="demo-multiple-chip-label">{label}</InputLabel>
+      <FormControl
+        sx={{
+          m: 0,
+          width: 200,
+          '& .MuiOutlinedInput-notchedOutline': {
+            border: 'solid',
+            borderWidth: '2px',
+            borderColor: 'black',
+          },
+        }}
+      >
+        <InputLabel id='demo-multiple-chip-label'>{label}</InputLabel>
         <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
+          labelId='demo-multiple-chip-label'
+          id='demo-multiple-chip'
           multiple
           value={data}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label={label} />}
+          input={<OutlinedInput id='select-multiple-chip' label={label} />}
           renderValue={(selected) => (
-            <Box sx={{ display: 'flex', overflow: 'auto', scrollbarWidth: 'none', gap: 0.5 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                overflow: 'auto',
+                scrollbarWidth: 'none',
+                gap: 0.5,
+              }}
+            >
               {selected.map((value) => (
                 <Chip key={value} label={value} />
               ))}

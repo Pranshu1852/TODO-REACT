@@ -3,7 +3,6 @@ export type InputRef = {
   value: string;
 };
 
-
 export type SharedRef = {
-  navigate: (path: string) => void
-}
+  navigate: (path: string) => void;
+};
