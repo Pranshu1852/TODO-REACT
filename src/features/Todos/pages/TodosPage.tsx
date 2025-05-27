@@ -24,7 +24,7 @@ function TodosPage() {
   }, [todoContext]);
 
   useEffect(() => {
-    if(!todoContext){
+    if (!todoContext) {
       return;
     }
 
@@ -35,7 +35,6 @@ function TodosPage() {
         searchParams.has('priority') ||
         searchParams.has('status'))
     ) {
-
       if (searchParams.has('search')) {
         filterTodos = searchArray(
           todoContext.state.todoArray,
@@ -43,7 +42,7 @@ function TodosPage() {
         );
       }
 
-      if (searchParams.has('priority')) {  
+      if (searchParams.has('priority')) {
         filterTodos = filterArray(
           filterTodos,
           searchParams.get('priority')!.split(','),
@@ -58,7 +57,6 @@ function TodosPage() {
           'status'
         );
       }
-
     }
     setTodos(filterTodos);
   }, [todoContext, searchParams]);
@@ -69,7 +67,7 @@ function TodosPage() {
     }
 
     const searchQuery = event.target.value;
-    
+
     searchParams.set('search', searchQuery);
     setSearchParams(searchParams);
     if (searchQuery === '') {
@@ -81,7 +79,7 @@ function TodosPage() {
   }
 
   function handleFilter(value: string | string[], label: string) {
-    searchParams.set(label,value.toString());
+    searchParams.set(label, value.toString());
     setSearchParams(searchParams);
 
     if (value.length === 0) {
@@ -93,17 +91,20 @@ function TodosPage() {
   }
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex flex-row gap-4 flex-wrap lg:flex-nowrap border-2 border-black p-5 rounded-lg">
-        <SearchBar value={searchParams.get('search') ?? ''} handleChange={handleChange} />
+    <div className='flex flex-col gap-10'>
+      <div className='flex flex-row gap-4 flex-wrap lg:flex-nowrap border-2 border-black p-5 rounded-lg'>
+        <SearchBar
+          value={searchParams.get('search') ?? ''}
+          handleChange={handleChange}
+        />
         <MultipleSelectChip
-          label="Priority"
+          label='Priority'
           value={searchParams.get('priority')?.split(',') ?? []}
           options={[PriorityType.HIGH, PriorityType.MEDIUM, PriorityType.LOW]}
           onChange={handleFilter}
         />
         <MultipleSelectChip
-          label="Status"
+          label='Status'
           value={searchParams.get('status')?.split(',') ?? []}
           options={[
             StatusType.NOTSELECTED,
@@ -114,7 +115,7 @@ function TodosPage() {
         />
       </div>
 
-      <div className="grid grid-cols-autofill-250 sm:grid-cols-autofill-500 gap-5">
+      <div className='grid grid-cols-autofill-250 sm:grid-cols-autofill-500 gap-5'>
         {todos.map((item) => {
           return (
             <TodoComponent
@@ -130,8 +131,8 @@ function TodosPage() {
         })}
       </div>
       <Link
-        to="/addtodo"
-        className="flex fixed bottom-7 right-7 bg-black p-5 rounded-full"
+        to='/addtodo'
+        className='flex fixed bottom-7 right-7 bg-black p-5 rounded-full'
       >
         <AddTaskIcon
           sx={{

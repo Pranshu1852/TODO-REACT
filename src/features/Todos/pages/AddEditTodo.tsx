@@ -27,7 +27,7 @@ function AddEditTodo() {
       return todo;
     }
 
-    if (!todoContext || !id) {
+    if (!id) {
       return;
     }
 
@@ -40,10 +40,6 @@ function AddEditTodo() {
   const registerRef = (name: string) => (element: InputRef | null) => {
     formRefs.current[name] = element;
   };
-
-  if (!todoContext) {
-    return;
-  }
 
   const { dispatch } = todoContext;
 
@@ -85,21 +81,21 @@ function AddEditTodo() {
   }
 
   return (
-    <div className="flex w-full mt-10 p-10">
+    <div className='flex w-full mt-10 p-10'>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-10 p-7 border-2 border-black rounded-lg m-auto w-full max-w-2xl"
+        className='flex flex-col gap-10 p-7 border-2 border-black rounded-lg m-auto w-full max-w-2xl'
       >
-        <h2 className="text-2xl font-[Tagesschrift] text-center">
+        <h2 className='text-2xl font-[Tagesschrift] text-center'>
           {id ? 'Edit' : 'Add'} ToDo
         </h2>
-        <div className="flex flex-col gap-7">
+        <div className='flex flex-col gap-7'>
           <InputField
             ref={registerRef('title')}
-            label="Title"
-            id="title"
-            name="title"
-            placeholder="Enter todo title..."
+            label='Title'
+            id='title'
+            name='title'
+            placeholder='Enter todo title...'
             value={todoData ? todoData.title : ''}
             rules={{
               required: {
@@ -111,14 +107,14 @@ function AddEditTodo() {
                 message: t('Minimum length should be 3.'),
               },
             }}
-            validationMode="all"
+            validationMode='all'
           />
           <TextAreaField
             ref={registerRef('description')}
-            label="Description"
-            id="description"
-            name="description"
-            placeholder="Enter todo description..."
+            label='Description'
+            id='description'
+            name='description'
+            placeholder='Enter todo description...'
             value={todoData ? todoData.description : ''}
             rules={{
               required: {
@@ -130,14 +126,14 @@ function AddEditTodo() {
                 message: t('Minimum length should be 10.'),
               },
             }}
-            validationMode="all"
+            validationMode='all'
             rows={5}
           />
           <RadioGroupField
             ref={registerRef('priority')}
-            label="Priority"
-            id="priority"
-            name="priority"
+            label='Priority'
+            id='priority'
+            name='priority'
             value={todoData ? todoData.priority : ''}
             options={[
               {
@@ -159,14 +155,14 @@ function AddEditTodo() {
                 message: t('This is require field.'),
               },
             }}
-            validationMode="all"
+            validationMode='all'
           />
           {id && (
             <RadioGroupField
               ref={registerRef('status')}
-              label="Status"
-              id="status"
-              name="status"
+              label='Status'
+              id='status'
+              name='status'
               value={todoData ? todoData.status : ''}
               options={[
                 {
@@ -188,12 +184,12 @@ function AddEditTodo() {
                   message: t('This is require field.'),
                 },
               }}
-              validationMode="all"
+              validationMode='all'
             />
           )}
         </div>
 
-        <button className="bg-black text-white py-2 px-4 rounded-md m-auto">
+        <button className='bg-black text-white py-2 px-4 rounded-md m-auto'>
           {id ? 'Change' : 'Create'} Todo
         </button>
       </form>

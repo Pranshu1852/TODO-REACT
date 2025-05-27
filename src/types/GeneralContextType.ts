@@ -1,6 +1,6 @@
 import type { ActionDispatch } from 'react';
 
-export enum GeneralContextAction {
+export const enum GeneralContextAction {
   TOGGLETHEME,
   CHANGELANGUAGE,
 }

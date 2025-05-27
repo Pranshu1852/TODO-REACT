@@ -11,7 +11,7 @@ import storageHandler from '../../../utils/storageHandler';
 import TodoContext from './TodoContext';
 
 const initialState = {
-  todoArray: storageHandler.getStorage<Array<Todo>>('todos'),
+  todoArray: storageHandler.getStorage<Array<Todo>>('todos') || [],
 };
 
 function addTodo(todoArray: Array<Todo>, todo: Todo) {

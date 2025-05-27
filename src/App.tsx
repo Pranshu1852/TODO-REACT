@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Routes, Route } from 'react-router-dom';
 
 import ErrorFallBack from './components/ErrorFallback';
+import Loading from './components/Loading';
 import NotFound from './components/NotFound';
 import GeneralContext from './context/GeneralContext';
 import AddEditTodo from './features/Todos/pages/AddEditTodo';
@@ -11,7 +12,6 @@ import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
 import TodoLayout from './features/Todos/TodoLayout';
 import MainLayout from './layouts/MainLayout';
 import { sharedRef } from './utils/sharedRef';
-import Loading from './components/Loading';
 
 const TodosPage = lazy(() => import('./features/Todos/pages/TodosPage'));
 
@@ -21,18 +21,12 @@ function App() {
   const generalContext = useContext(GeneralContext);
 
   useEffect(() => {
-    if (generalContext) {
-      i18n.changeLanguage(generalContext.state.language);
-    }
+    i18n.changeLanguage(generalContext.state.language);
   }, [i18n, generalContext]);
 
   useEffect(() => {
     document.body.dir = i18n.dir();
   }, [i18n, i18n.language]);
-
-  if (!generalContext) {
-    return;
-  }
 
   const { state } = generalContext;
 
@@ -49,11 +43,11 @@ function App() {
         className={`flex flex-col min-h-[100vh] font-[Montserrat] ${state.themeMode === 'light' ? 'bg-white text-black' : 'bg-[#333] text-white'}`}
       >
         <Routes>
-          <Route path="/" element={<MainLayout />}>
+          <Route path='/' element={<MainLayout />}>
             <Route index element={<h2>Home</h2>} />
-            <Route path="/addtodo" element={<AddEditTodo />} />
-            <Route path="/edittodo/:id" element={<AddEditTodo />} />
-            <Route path="/todos" element={<TodoLayout />}>
+            <Route path='/addtodo' element={<AddEditTodo />} />
+            <Route path='/edittodo/:id' element={<AddEditTodo />} />
+            <Route path='/todos' element={<TodoLayout />}>
               <Route
                 index
                 element={
@@ -62,12 +56,12 @@ function App() {
                   </Suspense>
                 }
               />
-              <Route path="/todos/:id" element={<TodoDetailPage />} />
+              <Route path='/todos/:id' element={<TodoDetailPage />} />
             </Route>
 
-            <Route path="/about" element={<h2>About</h2>} />
+            <Route path='/about' element={<h2>About</h2>} />
           </Route>
-          <Route path="/*" element={<NotFound />} />
+          <Route path='/*' element={<NotFound />} />
         </Routes>
       </div>
     </ErrorBoundary>

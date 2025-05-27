@@ -9,12 +9,8 @@ function LanguageSelector() {
   const { i18n } = useTranslation();
   const generalContext = useContext(GeneralContext);
 
-  if (!generalContext) {
-    return;
-  }
-
   function handleLanguageChange(lang: string) {
-    generalContext!.dispatch({
+    generalContext.dispatch({
       type: GeneralContextAction.CHANGELANGUAGE,
       payload: lang,
     });
@@ -23,10 +19,10 @@ function LanguageSelector() {
 
   return (
     <TextField
-      id="outlined-select-currency "
+      id='outlined-select-currency '
       select
-      defaultValue="en"
-      size="small"
+      defaultValue='en'
+      size='small'
       sx={{
         color: 'black',
         border: 'none',
@@ -36,11 +32,11 @@ function LanguageSelector() {
         handleLanguageChange(event.target.value);
       }}
     >
-      <MenuItem value="en">English</MenuItem>
-      <MenuItem value="gj">Gujarati</MenuItem>
-      <MenuItem value="hi">Hindi</MenuItem>
-      <MenuItem value="fr">French</MenuItem>
-      <MenuItem value="ar">Arabic</MenuItem>
+      <MenuItem value='en'>English</MenuItem>
+      <MenuItem value='gj'>Gujarati</MenuItem>
+      <MenuItem value='hi'>Hindi</MenuItem>
+      <MenuItem value='fr'>French</MenuItem>
+      <MenuItem value='ar'>Arabic</MenuItem>
     </TextField>
   );
 }

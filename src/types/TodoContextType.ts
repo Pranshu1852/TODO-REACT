@@ -15,7 +15,7 @@ export interface TodoContextStateType {
   todoArray: Todo[];
 }
 
-export enum TodoContextActions {
+export const enum TodoContextActions {
   ADDTODO,
   UPDATETODO,
   REMOVETODO,

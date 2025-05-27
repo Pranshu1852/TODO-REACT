@@ -1,30 +1,28 @@
-import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+
+interface OptionType {
+  label: string;
+  path: string;
+}
+
+interface NavLinksProps {
+  options: Array<OptionType>;
+}
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) => {
   return `${isActive && 'text-blue-600'}`;
 };
 
-function NavLinks() {
-  const { t } = useTranslation();
-
+function NavLinks({ options }: NavLinksProps) {
   return (
     <>
-      <li>
-        <NavLink className={navLinkClass} to="/">
-          {t('Home')}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink className={navLinkClass} to="/about">
-          {t('About')}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink className={navLinkClass} to="/todos">
-          {t('Todos')}
-        </NavLink>
-      </li>
+      {options.map((option, index) => (
+        <li key={index}>
+          <NavLink className={navLinkClass} to={option.path}>
+            {option.label}
+          </NavLink>
+        </li>
+      ))}
     </>
   );
 }

@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky install",
-    "format": "prettier --write ./src"
+    "format": "prettier --write ./src",
+    "lint:staged": "git diff --cached --name-only --diff-filter=ACM | grep '\\.\\(js\\|jsx\\|ts\\|tsx\\)$' | xargs eslint",
+    "format:staged": "git diff --cached --name-only --diff-filter=ACM | grep '\\.\\(js\\|jsx\\|ts\\|tsx\\|css\\|scss\\|json\\)$' | xargs prettier --write"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
