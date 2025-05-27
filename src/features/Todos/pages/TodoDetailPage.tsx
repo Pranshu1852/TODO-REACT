@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { useErrorBoundary } from 'react-error-boundary';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import type { Todo } from '../../../types/TodoContextType';
+import { TodoContextActions, type Todo } from '../../../types/TodoContextType';
 import {
   formatDate,
   getPriorityColor,
@@ -14,6 +14,7 @@ function TodoDetailPage() {
   const { id } = useParams();
   const todoContext = useContext(TodoContext);
   const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+  const navigate = useNavigate();
   const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
@@ -43,6 +44,15 @@ function TodoDetailPage() {
     return;
   }
 
+  const { dispatch } = todoContext;
+
+  function handleDelete() {
+    if (id) {
+      dispatch({ type: TodoContextActions.REMOVETODO, payload: id });
+      navigate('/todos');
+    }
+  }
+
   return (
     <div className='flex flex-col gap-10 border-2 border-black rounded-lg p-10 bg-todo-60 bg-cover text-black'>
       <h2 className='text-3xl font-bold font-[Tagesschrift]'>
@@ -67,10 +77,16 @@ function TodoDetailPage() {
       </div>
       <p className='text-xl'>{todoData.description}</p>
       <div className='flex flex-row gap-5 justify-between'>
-        <button className='text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all'>
+        <Link
+          to={`/edittodo/${todoData.id}`}
+          className='text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all'
+        >
           Edit
-        </button>
-        <button className='text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg bg-black text-white hover:bg-transparent hover:text-black transition-all'>
+        </Link>
+        <button
+          onClick={handleDelete}
+          className='text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg bg-black text-white hover:bg-transparent hover:text-black transition-all'
+        >
           Delete
         </button>
       </div>
