@@ -45,10 +45,12 @@ const todoSlice = createSlice({
   initialState: initialTodoState,
   reducers: {
     addTodo(state, action) {
-      state.todoArray = addTodo(state.todoArray, action.payload);
+      const todo = JSON.parse(action.payload);
+      state.todoArray = addTodo(state.todoArray, todo);
     },
     updateTodo(state, action) {
-      state.todoArray = updateTodo(state.todoArray, action.payload);
+      const todo = JSON.parse(action.payload);
+      state.todoArray = updateTodo(state.todoArray, todo);
     },
     removeTodo(state, action) {
       state.todoArray = removeTodo(state.todoArray, action.payload);

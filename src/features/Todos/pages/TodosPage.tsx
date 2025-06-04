@@ -1,45 +1,40 @@
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import { useContext, useEffect, useState, type ChangeEvent } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
 
 import TodoComponent from '../../../components/Todo';
+import type { StateType } from '../../../store/store';
 import type { Todo } from '../../../types/TodoContextType';
 import { PriorityType, StatusType } from '../../../types/Todotypes';
 import { filterArray, searchArray } from '../../../utils/FilterUtils';
 import MultipleSelectChip from '../components/MultiSelect';
 import SearchBar from '../components/SearchBar';
-import TodoContext from '../context/TodoContext';
 
 function TodosPage() {
   const { t } = useTranslation();
-  const todoContext = useContext(TodoContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const [todos, setTodos] = useState<Todo[]>([]);
+  const { todoArray } = useSelector((state: StateType) => {
+    return {
+      todoArray: state.todo.todoArray,
+    };
+  });
 
   useEffect(() => {
-    if (todoContext) {
-      setTodos(todoContext.state.todoArray);
-    }
-  }, [todoContext]);
+    setTodos(todoArray);
+  }, []);
 
   useEffect(() => {
-    if (!todoContext) {
-      return;
-    }
-
-    let filterTodos = todoContext.state.todoArray;
+    let filterTodos = todoArray;
     if (
-      todoContext &&
-      (searchParams.has('search') ||
-        searchParams.has('priority') ||
-        searchParams.has('status'))
+      searchParams.has('search') ||
+      searchParams.has('priority') ||
+      searchParams.has('status')
     ) {
       if (searchParams.has('search')) {
-        filterTodos = searchArray(
-          todoContext.state.todoArray,
-          searchParams.get('search')
-        );
+        filterTodos = searchArray(todoArray, searchParams.get('search'));
       }
 
       if (searchParams.has('priority')) {
@@ -59,13 +54,9 @@ function TodosPage() {
       }
     }
     setTodos(filterTodos);
-  }, [todoContext, searchParams]);
+  }, [searchParams]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    if (!todoContext) {
-      return;
-    }
-
     const searchQuery = event.target.value;
 
     searchParams.set('search', searchQuery);

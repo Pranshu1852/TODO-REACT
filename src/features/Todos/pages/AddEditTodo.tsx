@@ -77,10 +77,12 @@ function AddEditTodo() {
       created_at: todoData ? todoData.created_at : new Date(),
     };
 
+    const todoStringify = JSON.stringify(todo);
+
     if (id) {
-      dispatch(todoAction.updateTodo(todo));
+      dispatch(todoAction.updateTodo(todoStringify));
     } else {
-      dispatch(todoAction.addTodo(todo));
+      dispatch(todoAction.addTodo(todoStringify));
     }
 
     navigate('/todos');
