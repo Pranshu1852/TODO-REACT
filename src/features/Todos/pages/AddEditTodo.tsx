@@ -1,22 +1,30 @@
-import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import type { StateType } from '../../../store/store';
+import { todoAction } from '../../../store/todoSlice';
 import type { InputRef } from '../../../types/Reftype';
-import { TodoContextActions, type Todo } from '../../../types/TodoContextType';
+import { type Todo } from '../../../types/TodoContextType';
 import { PriorityType, StatusType } from '../../../types/Todotypes';
 import InputField from '../../Formvalidation/InputField';
 import RadioGroupField from '../../Formvalidation/RadioGroupField';
 import TextAreaField from '../../Formvalidation/TextAreaField';
-import TodoContext from '../context/TodoContext';
 
 function AddEditTodo() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const todoContext = useContext(TodoContext);
   const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+
+  const { todoArray } = useSelector((state: StateType) => {
+    return {
+      todoArray: state.todo.todoArray,
+    };
+  });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     function findTodo(todoArray: Array<Todo>, id: string) {
@@ -31,17 +39,15 @@ function AddEditTodo() {
       return;
     }
 
-    const todo = findTodo(todoContext.state.todoArray, id);
+    const todo = findTodo(todoArray, id);
     setTodoData(todo);
-  }, [id, todoContext]);
+  }, [id]);
 
   const formRefs = useRef<Record<string, InputRef | null>>({});
 
   const registerRef = (name: string) => (element: InputRef | null) => {
     formRefs.current[name] = element;
   };
-
-  const { dispatch } = todoContext;
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -72,9 +78,9 @@ function AddEditTodo() {
     };
 
     if (id) {
-      dispatch({ type: TodoContextActions.UPDATETODO, payload: todo });
+      dispatch(todoAction.updateTodo(todo));
     } else {
-      dispatch({ type: TodoContextActions.ADDTODO, payload: todo });
+      dispatch(todoAction.addTodo(todo));
     }
 
     navigate('/todos');
