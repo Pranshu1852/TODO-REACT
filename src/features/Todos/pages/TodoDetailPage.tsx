@@ -1,19 +1,26 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useErrorBoundary } from 'react-error-boundary';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { TodoContextActions, type Todo } from '../../../types/TodoContextType';
+import type { StateType } from '../../../store/store';
+import { todoAction } from '../../../store/todoSlice';
+import { type Todo } from '../../../types/TodoContextType';
 import {
   formatDate,
   getPriorityColor,
   getStatusColor,
 } from '../../../utils/todoUtils';
-import TodoContext from '../context/TodoContext';
 
 function TodoDetailPage() {
   const { id } = useParams();
-  const todoContext = useContext(TodoContext);
   const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+  const { todoArray } = useSelector((state: StateType) => {
+    return {
+      todoArray: state.todo.todoArray,
+    };
+  });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { showBoundary } = useErrorBoundary();
 
@@ -30,7 +37,7 @@ function TodoDetailPage() {
       return;
     }
 
-    const todo = findTodo(todoContext.state.todoArray, id);
+    const todo = findTodo(todoArray, id);
 
     if (!todo) {
       showBoundary('Please Enter Valid ID');
@@ -38,17 +45,15 @@ function TodoDetailPage() {
     }
 
     setTodoData(todo);
-  }, [id, todoContext, showBoundary]);
+  }, [id, showBoundary]);
 
   if (!id || !todoData) {
     return;
   }
 
-  const { dispatch } = todoContext;
-
   function handleDelete() {
     if (id) {
-      dispatch({ type: TodoContextActions.REMOVETODO, payload: id });
+      dispatch(todoAction.removeTodo(id));
       navigate('/todos');
     }
   }
