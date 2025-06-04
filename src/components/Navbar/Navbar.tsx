@@ -1,13 +1,14 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { Drawer } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import lightImage from '../../assets/light.svg';
 import darkImage from '../../assets/moon.svg';
-import GeneralContext from '../../context/GeneralContext';
-import { GeneralContextAction } from '../../types/GeneralContextType';
+import { generalAction } from '../../store/generalSlice';
+import type { StateType } from '../../store/store';
 
 import LanguageSelector from './LanguageSelector';
 import NavLinks from './NavLinks';
@@ -36,9 +37,13 @@ function Navbar() {
     setOpen(newOpen);
   };
 
-  const generalContext = useContext(GeneralContext);
+  const { theme } = useSelector((state: StateType) => {
+    return {
+      theme: state.general.themeMode,
+    };
+  });
 
-  const { state } = generalContext;
+  const dispatch = useDispatch();
 
   return (
     <div className='flex flex-row justify-between items-center p-5 shadow-md'>
@@ -67,13 +72,13 @@ function Navbar() {
       <div className='flex flex-row items-center gap-5'>
         <button
           onClick={() => {
-            generalContext.dispatch({ type: GeneralContextAction.TOGGLETHEME });
+            dispatch(generalAction.toggleTheme());
           }}
           className='flex justify-center items-center w-10 h-10 border-2 border-black rounded-md hover:opacity-70 active:op'
         >
           <img
             className='h-7 w-7'
-            src={state.themeMode === 'light' ? lightImage : darkImage}
+            src={theme === 'light' ? lightImage : darkImage}
             alt='light mode'
           />
         </button>

@@ -6,15 +6,18 @@ import App from './App.tsx';
 import './index.css';
 import './lib/i18n.ts';
 import { NavigationBridgeComponent } from './components/NavigationBridge.tsx';
-import ContextWrapper from './wrapper/ContexWrapper.tsx';
+
+import { Provider } from 'react-redux';
+
+import { store } from './store/store.ts';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ContextWrapper>
+    <Provider store={store}>
       <BrowserRouter>
         <NavigationBridgeComponent />
         <App />
       </BrowserRouter>
-    </ContextWrapper>
+    </Provider>
   </StrictMode>
 );
