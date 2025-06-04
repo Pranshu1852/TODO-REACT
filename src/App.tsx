@@ -1,16 +1,17 @@
-import { lazy, Suspense, useContext, useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
 import ErrorFallBack from './components/ErrorFallback';
 import Loading from './components/Loading';
 import NotFound from './components/NotFound';
-import GeneralContext from './context/GeneralContext';
 import AddEditTodo from './features/Todos/pages/AddEditTodo';
 import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
 import TodoLayout from './features/Todos/TodoLayout';
 import MainLayout from './layouts/MainLayout';
+import type { StateType } from './store/store';
 import { sharedRef } from './utils/sharedRef';
 
 const TodosPage = lazy(() => import('./features/Todos/pages/TodosPage'));
@@ -18,17 +19,17 @@ const TodosPage = lazy(() => import('./features/Todos/pages/TodosPage'));
 function App() {
   const { i18n } = useTranslation();
 
-  const generalContext = useContext(GeneralContext);
+  const { language, theme } = useSelector((state: StateType) => {
+    return {
+      language: state.general.language,
+      theme: state.general.themeMode,
+    };
+  });
 
   useEffect(() => {
-    i18n.changeLanguage(generalContext.state.language);
-  }, [i18n, generalContext]);
-
-  useEffect(() => {
+    i18n.changeLanguage(language);
     document.body.dir = i18n.dir();
-  }, [i18n, i18n.language]);
-
-  const { state } = generalContext;
+  }, [i18n, i18n.language, language]);
 
   return (
     <ErrorBoundary
@@ -40,7 +41,7 @@ function App() {
       }}
     >
       <div
-        className={`flex flex-col min-h-[100vh] font-[Montserrat] ${state.themeMode === 'light' ? 'bg-white text-black' : 'bg-[#333] text-white'}`}
+        className={`flex flex-col min-h-[100vh] font-[Montserrat] ${theme === 'light' ? 'bg-white text-black' : 'bg-[#333] text-white'}`}
       >
         <Routes>
           <Route path='/' element={<MainLayout />}>
