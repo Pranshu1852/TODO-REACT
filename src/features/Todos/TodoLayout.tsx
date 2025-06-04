@@ -1,15 +1,19 @@
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
+import type { StateType } from '../../store/store';
 import { StatusType } from '../../types/Todotypes';
-
-import TodoContext from './context/TodoContext';
 
 function TodoLayout() {
   const { t } = useTranslation();
-  const { state } = useContext(TodoContext);
+  const { todoArray } = useSelector((state: StateType) => {
+    return {
+      todoArray: state.todo.todoArray,
+    };
+  });
   const [todoStatusNo, setTodoStatusNo] = useState({
     [StatusType.NOTSELECTED]: 0,
     [StatusType.INPROGRESS]: 0,
@@ -22,7 +26,7 @@ function TodoLayout() {
       [StatusType.INPROGRESS]: 0,
       [StatusType.COMPLETED]: 0,
     });
-    state.todoArray.forEach((item) => {
+    todoArray.forEach((item) => {
       setTodoStatusNo((prevStatus) => {
         return {
           ...prevStatus,
@@ -30,7 +34,7 @@ function TodoLayout() {
         };
       });
     });
-  }, [state]);
+  }, []);
 
   return (
     <div className='flex flex-col gap-10 m-10'>
