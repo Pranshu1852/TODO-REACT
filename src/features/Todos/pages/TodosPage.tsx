@@ -24,7 +24,7 @@ function TodosPage() {
 
   useEffect(() => {
     setTodos(todoArray);
-  }, []);
+  }, [todoArray]);
 
   useEffect(() => {
     let filterTodos = todoArray;
@@ -54,7 +54,7 @@ function TodosPage() {
       }
     }
     setTodos(filterTodos);
-  }, [searchParams]);
+  }, [todoArray, searchParams]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const searchQuery = event.target.value;

@@ -45,7 +45,7 @@ function TodoDetailPage() {
     }
 
     setTodoData(todo);
-  }, [id, showBoundary]);
+  }, [todoArray, id, showBoundary]);
 
   if (!id || !todoData) {
     return;

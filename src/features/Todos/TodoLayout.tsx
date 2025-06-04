@@ -34,7 +34,7 @@ function TodoLayout() {
         };
       });
     });
-  }, []);
+  }, [todoArray]);
 
   return (
     <div className='flex flex-col gap-10 m-10'>

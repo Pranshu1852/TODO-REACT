@@ -41,7 +41,7 @@ function AddEditTodo() {
 
     const todo = findTodo(todoArray, id);
     setTodoData(todo);
-  }, [id]);
+  }, [todoArray, id]);
 
   const formRefs = useRef<Record<string, InputRef | null>>({});
 
