@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import type { Todo } from '../types/TodoContextType';
 import storageHandler from '../utils/storageHandler';
@@ -44,15 +44,13 @@ const todoSlice = createSlice({
   name: 'todoState',
   initialState: initialTodoState,
   reducers: {
-    addTodo(state, action) {
-      const todo = JSON.parse(action.payload);
-      state.todoArray = addTodo(state.todoArray, todo);
+    addTodo(state, action: PayloadAction<Todo>) {
+      state.todoArray = addTodo(state.todoArray, action.payload);
     },
-    updateTodo(state, action) {
-      const todo = JSON.parse(action.payload);
-      state.todoArray = updateTodo(state.todoArray, todo);
+    updateTodo(state, action: PayloadAction<Todo>) {
+      state.todoArray = updateTodo(state.todoArray, action.payload);
     },
-    removeTodo(state, action) {
+    removeTodo(state, action: PayloadAction<string>) {
       state.todoArray = removeTodo(state.todoArray, action.payload);
     },
   },

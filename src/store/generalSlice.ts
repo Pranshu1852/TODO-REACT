@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 const initialGeneralState = {
   themeMode: localStorage.getItem('theme') || 'light',
@@ -14,7 +14,7 @@ const generalSlice = createSlice({
       localStorage.setItem('theme', newTheme);
       state.themeMode = newTheme;
     },
-    setLanguage(state, action) {
+    setLanguage(state, action: PayloadAction<string>) {
       const newLanguage = action.payload;
       localStorage.setItem('lang', newLanguage);
       state.language = newLanguage;
