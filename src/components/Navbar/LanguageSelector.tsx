@@ -1,19 +1,17 @@
 import { MenuItem, TextField } from '@mui/material';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
-import GeneralContext from '../../context/GeneralContext';
-import { GeneralContextAction } from '../../types/GeneralContextType';
+import { generalAction } from '../../store/generalSlice';
+import { storeSelector } from '../../store/store';
 
 function LanguageSelector() {
   const { i18n } = useTranslation();
-  const generalContext = useContext(GeneralContext);
+  const dispatch = useDispatch();
+  const { language } = useSelector(storeSelector);
 
   function handleLanguageChange(lang: string) {
-    generalContext.dispatch({
-      type: GeneralContextAction.CHANGELANGUAGE,
-      payload: lang,
-    });
+    dispatch(generalAction.setLanguage(lang));
     i18n.changeLanguage(lang);
   }
 
@@ -27,7 +25,7 @@ function LanguageSelector() {
         color: 'black',
         border: 'none',
       }}
-      value={generalContext.state.language}
+      value={language}
       onChange={(event) => {
         handleLanguageChange(event.target.value);
       }}

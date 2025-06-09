@@ -28,7 +28,7 @@ export type TodoContextActionType =
     }
   | {
       type: TodoContextActions.UPDATETODO;
-      payload: string;
+      payload: Todo;
     }
   | {
       type: TodoContextActions.REMOVETODO;

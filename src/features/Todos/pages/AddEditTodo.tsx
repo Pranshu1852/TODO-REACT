@@ -1,29 +1,49 @@
-import { useContext, useRef, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { storeSelector } from '../../../store/store';
+import { todoAction } from '../../../store/todoSlice';
 import type { InputRef } from '../../../types/Reftype';
-import { TodoContextActions, type Todo } from '../../../types/TodoContextType';
+import { type Todo } from '../../../types/TodoContextType';
 import { PriorityType, StatusType } from '../../../types/Todotypes';
 import InputField from '../../Formvalidation/InputField';
 import RadioGroupField from '../../Formvalidation/RadioGroupField';
 import TextAreaField from '../../Formvalidation/TextAreaField';
-import TodoContext from '../context/TodoContext';
 
-function AddTodoPage() {
+function AddEditTodo() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
+  const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+
+  const { todoArray } = useSelector(storeSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    function findTodo(todoArray: Array<Todo>, id: string) {
+      const todo = todoArray.find((element) => {
+        return element.id === id;
+      });
+
+      return todo;
+    }
+
+    if (!id) {
+      return;
+    }
+
+    const todo = findTodo(todoArray, id);
+    setTodoData(todo);
+  }, [todoArray, id]);
 
   const formRefs = useRef<Record<string, InputRef | null>>({});
 
   const registerRef = (name: string) => (element: InputRef | null) => {
     formRefs.current[name] = element;
   };
-
-  const todoContext = useContext(TodoContext);
-
-  const { dispatch } = todoContext;
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -45,15 +65,20 @@ function AddTodoPage() {
     }
 
     const todo: Todo = {
-      id: crypto.randomUUID(),
+      id: id ?? crypto.randomUUID(),
       title: data.title,
       description: data.description,
       priority: data.priority as PriorityType,
-      status: StatusType.NOTSELECTED,
-      created_at: new Date(),
+      status: (data.status as StatusType) ?? StatusType.NOTSELECTED,
+      created_at: todoData ? todoData.created_at : new Date(),
     };
 
-    dispatch({ type: TodoContextActions.ADDTODO, payload: todo });
+    if (id) {
+      dispatch(todoAction.updateTodo(todo));
+    } else {
+      dispatch(todoAction.addTodo(todo));
+    }
+
     navigate('/todos');
   }
 
@@ -63,7 +88,9 @@ function AddTodoPage() {
         onSubmit={handleSubmit}
         className='flex flex-col gap-10 p-7 border-2 border-black rounded-lg m-auto w-full max-w-2xl'
       >
-        <h2 className='text-2xl font-[Tagesschrift] text-center'>Add ToDo</h2>
+        <h2 className='text-2xl font-[Tagesschrift] text-center'>
+          {id ? 'Edit' : 'Add'} ToDo
+        </h2>
         <div className='flex flex-col gap-7'>
           <InputField
             ref={registerRef('title')}
@@ -71,6 +98,7 @@ function AddTodoPage() {
             id='title'
             name='title'
             placeholder='Enter todo title...'
+            value={todoData ? todoData.title : ''}
             rules={{
               required: {
                 value: true,
@@ -89,6 +117,7 @@ function AddTodoPage() {
             id='description'
             name='description'
             placeholder='Enter todo description...'
+            value={todoData ? todoData.description : ''}
             rules={{
               required: {
                 value: true,
@@ -107,6 +136,7 @@ function AddTodoPage() {
             label='Priority'
             id='priority'
             name='priority'
+            value={todoData ? todoData.priority : ''}
             options={[
               {
                 label: 'High',
@@ -135,6 +165,7 @@ function AddTodoPage() {
               label='Status'
               id='status'
               name='status'
+              value={todoData ? todoData.status : ''}
               options={[
                 {
                   label: 'Not Started',
@@ -161,11 +192,11 @@ function AddTodoPage() {
         </div>
 
         <button className='bg-black text-white py-2 px-4 rounded-md m-auto'>
-          Create Todo
+          {id ? 'Change' : 'Create'} Todo
         </button>
       </form>
     </div>
   );
 }
 
-export default AddTodoPage;
+export default AddEditTodo;

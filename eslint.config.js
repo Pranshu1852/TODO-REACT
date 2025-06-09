@@ -22,7 +22,6 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       "no-console": ["error", { "allow": ["error"] }],
       'import/order': [
-        // Add the import order rule
         'warn',
         {
           groups: [

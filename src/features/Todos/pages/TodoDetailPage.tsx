@@ -1,19 +1,23 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useErrorBoundary } from 'react-error-boundary';
-import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import type { Todo } from '../../../types/TodoContextType';
+import { storeSelector } from '../../../store/store';
+import { todoAction } from '../../../store/todoSlice';
+import { type Todo } from '../../../types/TodoContextType';
 import {
   formatDate,
   getPriorityColor,
   getStatusColor,
 } from '../../../utils/todoUtils';
-import TodoContext from '../context/TodoContext';
 
 function TodoDetailPage() {
   const { id } = useParams();
-  const todoContext = useContext(TodoContext);
   const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
+  const { todoArray } = useSelector(storeSelector);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
@@ -29,7 +33,7 @@ function TodoDetailPage() {
       return;
     }
 
-    const todo = findTodo(todoContext.state.todoArray, id);
+    const todo = findTodo(todoArray, id);
 
     if (!todo) {
       showBoundary('Please Enter Valid ID');
@@ -37,10 +41,17 @@ function TodoDetailPage() {
     }
 
     setTodoData(todo);
-  }, [id, todoContext, showBoundary]);
+  }, [todoArray, id, showBoundary]);
 
   if (!id || !todoData) {
     return;
+  }
+
+  function handleDelete() {
+    if (id) {
+      dispatch(todoAction.removeTodo(id));
+      navigate('/todos');
+    }
   }
 
   return (
@@ -67,10 +78,16 @@ function TodoDetailPage() {
       </div>
       <p className='text-xl'>{todoData.description}</p>
       <div className='flex flex-row gap-5 justify-between'>
-        <button className='text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all'>
+        <Link
+          to={`/edittodo/${todoData.id}`}
+          className='text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all'
+        >
           Edit
-        </button>
-        <button className='text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg bg-black text-white hover:bg-transparent hover:text-black transition-all'>
+        </Link>
+        <button
+          onClick={handleDelete}
+          className='text-lg font-semibold py-2 px-4 border-2 border-black rounded-lg bg-black text-white hover:bg-transparent hover:text-black transition-all'
+        >
           Delete
         </button>
       </div>
