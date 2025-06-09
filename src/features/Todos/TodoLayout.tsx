@@ -4,16 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
-import type { StateType } from '../../store/store';
+import { storeSelector } from '../../store/store';
 import { StatusType } from '../../types/Todotypes';
 
 function TodoLayout() {
   const { t } = useTranslation();
-  const { todoArray } = useSelector((state: StateType) => {
-    return {
-      todoArray: state.todo.todoArray,
-    };
-  });
+  const { todoArray } = useSelector(storeSelector);
   const [todoStatusNo, setTodoStatusNo] = useState({
     [StatusType.NOTSELECTED]: 0,
     [StatusType.INPROGRESS]: 0,

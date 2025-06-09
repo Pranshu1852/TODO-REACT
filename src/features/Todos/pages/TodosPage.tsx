@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
 
 import TodoComponent from '../../../components/Todo';
-import type { StateType } from '../../../store/store';
+import { storeSelector } from '../../../store/store';
 import type { Todo } from '../../../types/TodoContextType';
 import { PriorityType, StatusType } from '../../../types/Todotypes';
 import { filterArray, searchArray } from '../../../utils/FilterUtils';
@@ -16,11 +16,7 @@ function TodosPage() {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [todos, setTodos] = useState<Todo[]>([]);
-  const { todoArray } = useSelector((state: StateType) => {
-    return {
-      todoArray: state.todo.todoArray,
-    };
-  });
+  const { todoArray } = useSelector(storeSelector);
 
   useEffect(() => {
     setTodos(todoArray);

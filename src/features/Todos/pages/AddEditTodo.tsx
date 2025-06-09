@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import type { StateType } from '../../../store/store';
+import { storeSelector } from '../../../store/store';
 import { todoAction } from '../../../store/todoSlice';
 import type { InputRef } from '../../../types/Reftype';
 import { type Todo } from '../../../types/TodoContextType';
@@ -18,11 +18,7 @@ function AddEditTodo() {
   const navigate = useNavigate();
   const [todoData, setTodoData] = useState<Todo | undefined>(undefined);
 
-  const { todoArray } = useSelector((state: StateType) => {
-    return {
-      todoArray: state.todo.todoArray,
-    };
-  });
+  const { todoArray } = useSelector(storeSelector);
 
   const dispatch = useDispatch();
 

@@ -11,7 +11,7 @@ import AddEditTodo from './features/Todos/pages/AddEditTodo';
 import TodoDetailPage from './features/Todos/pages/TodoDetailPage';
 import TodoLayout from './features/Todos/TodoLayout';
 import MainLayout from './layouts/MainLayout';
-import type { StateType } from './store/store';
+import { storeSelector } from './store/store';
 import { sharedRef } from './utils/sharedRef';
 
 const TodosPage = lazy(() => import('./features/Todos/pages/TodosPage'));
@@ -19,12 +19,7 @@ const TodosPage = lazy(() => import('./features/Todos/pages/TodosPage'));
 function App() {
   const { i18n } = useTranslation();
 
-  const { language, theme } = useSelector((state: StateType) => {
-    return {
-      language: state.general.language,
-      theme: state.general.themeMode,
-    };
-  });
+  const { language, theme } = useSelector(storeSelector);
 
   useEffect(() => {
     i18n.changeLanguage(language);

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import lightImage from '../../assets/light.svg';
 import darkImage from '../../assets/moon.svg';
 import { generalAction } from '../../store/generalSlice';
-import type { StateType } from '../../store/store';
+import { storeSelector } from '../../store/store';
 
 import LanguageSelector from './LanguageSelector';
 import NavLinks from './NavLinks';
@@ -37,11 +37,7 @@ function Navbar() {
     setOpen(newOpen);
   };
 
-  const { theme } = useSelector((state: StateType) => {
-    return {
-      theme: state.general.themeMode,
-    };
-  });
+  const { theme } = useSelector(storeSelector);
 
   const dispatch = useDispatch();
 
